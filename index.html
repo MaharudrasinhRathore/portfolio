@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maharudrasinh Karansinh Jetavat | CSE & Full-Stack Developer</title>
+  <meta name="description" content="Personal Portfolio of Maharudrasinh Karansinh Jetavat - Computer Science Engineering Student, Full-Stack Developer, and Creative Technologist.">
+  <meta name="keywords" content="Maharudrasinh Jetavat, Computer Science, Full-Stack Developer, React, Bootstrap, Portfolio">
+  <meta name="author" content="Maharudrasinh Karansinh Jetavat">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons 1.11.3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+      --primary-accent: #3b82f6;
+      --primary-accent-rgb: 59, 130, 246;
+      --secondary-accent: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      --card-radius: 1rem;
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-bs-theme="dark"] {
+      --bg-surface: #0b0f19;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(59, 130, 246, 0.4);
+      --text-muted-custom: #94a3b8;
+      --hero-blob-1: rgba(59, 130, 246, 0.15);
+      --hero-blob-2: rgba(6, 182, 212, 0.12);
+    }
+
+    [data-bs-theme="light"] {
+      --bg-surface: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --card-hover-border: rgba(59, 130, 246, 0.5);
+      --text-muted-custom: #64748b;
+      --hero-blob-1: rgba(59, 130, 246, 0.08);
+      --hero-blob-2: rgba(6, 182, 212, 0.08);
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-surface);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .font-code {
+      font-family: var(--font-code);
+    }
+
+    /* Ambient background lighting */
+    .ambient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-blob-1 {
+      position: absolute;
+      top: -10%;
+      left: 20%;
+      width: 500px;
+      height: 500px;
+      background: var(--hero-blob-1);
+      filter: blur(120px);
+      border-radius: 50%;
+      animation: floatSlow 18s ease-in-out infinite alternate;
+    }
+    .ambient-blob-2 {
+      position: absolute;
+      top: 40%;
+      right: 10%;
+      width: 450px;
+      height: 450px;
+      background: var(--hero-blob-2);
+      filter: blur(140px);
+      border-radius: 50%;
+      animation: floatSlow 15s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, 40px) scale(1.1); }
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--card-radius);
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: var(--transition-smooth);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .navbar-brand-tag {
+      font-family: var(--font-code);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-link {
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-link.active, .nav-link:hover {
+      color: var(--primary-accent) !important;
+    }
+
+    /* Typing cursor */
+    .typed-cursor {
+      display: inline-block;
+      width: 3px;
+      background: var(--primary-accent);
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Timeline styling */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 2px;
+      background: linear-gradient(to bottom, #3b82f6, #06b6d4, rgba(59, 130, 246, 0.2));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.25rem;
+    }
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 0.35rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary-accent);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+    }
+
+    /* Section Heading Styles */
+    .section-tag {
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary-accent);
+      font-weight: 600;
+    }
+
+    /* Skill Pill */
+    .skill-pill {
+      background: rgba(var(--primary-accent-rgb), 0.08);
+      border: 1px solid rgba(var(--primary-accent-rgb), 0.2);
+      border-radius: 9999px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition-smooth);
+    }
+    .skill-pill:hover {
+      background: rgba(var(--primary-accent-rgb), 0.16);
+      border-color: var(--primary-accent);
+      transform: translateY(-2px);
+    }
+
+    /* Back to top button */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-smooth);
+    }
+    #backToTopBtn.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Custom Notification Toast */
+    .toast-container-custom {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1050;
+    }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="100" tabindex="0">
+
+  <!-- Ambient Light Effect -->
+  <div class="ambient-bg">
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
+  </div>
+
+  <header>
+    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top bg-body-tertiary bg-opacity-75">
+      <div class="container py-1">
+        <div class="d-flex align-items-center gap-2 order-lg-last ms-auto ms-lg-0">
+          <!-- Dark/Light Mode Switcher -->
+          <button id="themeToggleBtn" class="btn btn-outline-secondary border-0 rounded-circle p-2 d-flex align-items-center justify-content-center" type="button" aria-label="Toggle theme">
+            <i id="themeIcon" class="bi bi-moon-stars-fill text-warning"></i>
+          </button>
+          
+          <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-3"></i>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+          <ul class="navbar-nav mb-2 mb-lg-0 gap-lg-3 text-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#skills">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#projects">Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#experience">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="min-vh-100 d-flex align-items-center pt-5">
+      <div class="container pt-5">
+        <div class="row align-items-center gy-5">
+          <div class="col-lg-7 text-center text-lg-start">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-4 rounded-pill border border-primary border-opacity-25 bg-primary bg-opacity-10">
+              <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+              <span class="small fw-semibold text-primary">Available for Internships & Projects</span>
+            </div>
+
+            <h1 class="display-3 fw-bold mb-3 lh-sm">
+              Hello, I'm <br>
+              <span class="gradient-text">Maharudrasinh Jetavat</span>
+            </h1>
+
+            <div class="h4 fw-medium text-body-secondary mb-4 font-code d-flex justify-content-center justify-content-lg-start align-items-center min-h-40">
+              <span>I build&nbsp;</span>
+              <span id="typed-text" class="text-primary fw-semibold"></span>
+              <span class="typed-cursor">&nbsp;</span>
+            </div>
+
+            <p class="lead text-body-secondary mb-4 pe-lg-4" style="max-width: 620px;">
+              Computer Science Engineering student at IITE specializing in modern full-stack engineering, responsive interfaces, and analytical software solutions.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-5">
+              <a href="#projects" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm d-flex align-items-center gap-2">
+                <span>View Projects</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+              <button class="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>View Resume</span>
+              </button>
+            </div>
+
+            <!-- Quick Metrics / Pills -->
+            <div class="row g-3 justify-content-center justify-content-lg-start">
+              <div class="col-auto">
+                <div class="p-3 rounded-4 glass-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-mortarboard-fill fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">IITE</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">B.Tech CSE Student</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="p-3 rounded-4 glass-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-code-slash fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">Full-Stack Stack</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">React, JS & Python</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="p-3 rounded-4 glass-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-briefcase-fill fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">Internship Ready</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Production Mindset</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 text-center">
+            <div class="position-relative d-inline-block p-4">
+              <!-- Visual Dev Card -->
+              <div class="glass-card p-4 text-start shadow-lg" style="max-width: 440px;">
+                <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+                  <div class="d-flex gap-2">
+                    <span class="rounded-circle bg-danger d-inline-block" style="width: 12px; height: 12px;"></span>
+                    <span class="rounded-circle bg-warning d-inline-block" style="width: 12px; height: 12px;"></span>
+                    <span class="rounded-circle bg-success d-inline-block" style="width: 12px; height: 12px;"></span>
+                  </div>
+                  <span class="font-code small text-body-secondary">developer_profile.json</span>
+                </div>
+                <pre class="font-code small m-0 text-body" style="line-height: 1.6;"><code>{
+  <span class="text-primary">"Name"</span>: <span class="text-success">"Maharudrasinh Jetavat"</span>,
+  <span class="text-primary">"Role"</span>: <span class="text-success">"Full-Stack Developer"</span>,
+  <span class="text-primary">"Degree"</span>: <span class="text-success">"B.Tech Computer Science"</span>,
+  <span class="text-primary">"Location"</span>: <span class="text-success">"Ahmedabad, Gujarat"</span>,
+  <span class="text-primary">"Curiosity"</span>: <span class="text-warning">"High"</span>,
+  <span class="text-primary">"Available"</span>: <span class="text-info">MAYBE</span>,
+  <span class="text-primary">"Mission"</span>: <span class="text-success">"Testing purposeful software"</span>
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="section-tag">// Discover</span>
+          <h2 class="display-6 fw-bold mt-1">About Me</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+        </div>
+
+        <div class="row gy-4 align-items-stretch">
+          <div class="col-lg-7">
+            <div class="glass-card p-4 p-md-5 h-100">
+              <h3 class="h4 fw-bold mb-3">Multidisciplinary Curiosity & Engineering Precision</h3>
+              <p class="text-body-secondary leading-relaxed mb-4">
+                I am Maharudrasinh Karansinh Jetavat, an undergraduate student in Computer Science and Engineering with an insatiable enthusiasm for the science of software architecture and web platforms. My approach unites theoretical computer science rigor with practical UI/UX execution.
+              </p>
+              <p class="text-body-secondary leading-relaxed mb-4">
+                Whether structuring scalable component hierarchies in modern frontend libraries, crafting intuitive dashboard utilities, or exploring algorithmic efficiency, I prioritize maintainable, clean code, responsive layouts, and genuine user utility.
+              </p>
+
+              <div class="row g-3 pt-2">
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-cpu text-primary fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Analytical Thinking</h6>
+                      <small class="text-body-secondary">System-oriented mindset</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-window-stack text-info fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Modern Frontend</h6>
+                      <small class="text-body-secondary">Responsive & Accessible</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-layers text-success fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Clean Architecture</h6>
+                      <small class="text-body-secondary">Maintainable components</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-lightning-charge text-warning fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Continuous Growth</h6>
+                      <small class="text-body-secondary">Rapid skill acquisition</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="glass-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <h4 class="h5 fw-bold mb-4 d-flex align-items-center gap-2">
+                  <i class="bi bi-person-badge text-primary"></i> Academic & Personal Details
+                </h4>
+
+                <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Formal Degree</span>
+                    <span class="fw-semibold">B.Tech - Computer Science & Engineering</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Institution</span>
+                    <span class="fw-semibold">Indus Institute of Technology and Engineering (IITE)</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Key Specialization</span>
+                    <span class="fw-semibold">Full-Stack Development, Data Structures, Web Systems</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Location</span>
+                    <span class="fw-semibold">Gujarat, India</span>
+                  </li>
+                  <li>
+                    <span class="text-body-secondary d-block small">Languages Spoken</span>
+                    <span class="fw-semibold">English, Hindi, Gujarati</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                <a href="#contact" class="btn btn-outline-primary w-100 rounded-pill fw-semibold">
+                  Get in Touch <i class="bi bi-envelope-arrow-up ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="py-5 bg-body-tertiary bg-opacity-50">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="section-tag">// Competencies</span>
+          <h2 class="display-6 fw-bold mt-1">Technical Skills & Toolkit</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Tools, languages, and technical disciplines I actively utilize.</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Languages & Web -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="bi bi-code-square fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Languages & Web</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Core programming constructs, markup, and scripting.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill"><i class="bi bi-filetype-html text-danger"></i> HTML5</span>
+                <span class="skill-pill"><i class="bi bi-filetype-css text-primary"></i> CSS3</span>
+                <span class="skill-pill"><i class="bi bi-filetype-js text-warning"></i> JavaScript</span>
+                <span class="skill-pill"><i class="bi bi-filetype-py text-info"></i> Python</span>
+                <span class="skill-pill"><i class="bi bi-c-circle text-primary"></i> C / C++</span>
+                <span class="skill-pill"><i class="bi bi-database text-success"></i> SQL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frameworks & Libraries -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-info bg-opacity-10 text-info">
+                  <i class="bi bi-boxes fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Frameworks</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Frontend frameworks, UI engines, and component systems.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill"><i class="bi bi-atom text-info"></i> React</span>
+                <span class="skill-pill"><i class="bi bi-bootstrap text-purple" style="color: #7952b3;"></i> Bootstrap 5</span>
+                <span class="skill-pill"><i class="bi bi-node-plus text-success"></i> Node.js (Core)</span>
+                <span class="skill-pill"><i class="bi bi-gear-wide-connected text-secondary"></i> Express.js</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developer Tools & Workflow -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-warning bg-opacity-10 text-warning">
+                  <i class="bi bi-tools fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Tools & Workflow</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Version management, API integration, and productivity.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill"><i class="bi bi-git text-danger"></i> Git</span>
+                <span class="skill-pill"><i class="bi bi-github"></i> GitHub</span>
+                <span class="skill-pill"><i class="bi bi-terminal text-info"></i> VS Code</span>
+          
+              </div>
+            </div>
+          </div>
+
+          <!-- Engineering Strengths -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success">
+                  <i class="bi bi-shield-check fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Core Strengths</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Algorithmic concepts, architecture, and design execution.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill"><i class="bi bi-diagram-3 text-primary"></i> Data Structures</span>
+                <span class="skill-pill"><i class="bi bi-phone-flip text-info"></i> Responsive Design</span>
+                <span class="skill-pill"><i class="bi bi-sliders text-warning"></i> UI/UX Precision</span>
+                <span class="skill-pill"><i class="bi bi-check-all text-success"></i> OOP Principles</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-4">
+          <span class="section-tag">// Portfolio Showcase</span>
+          <h2 class="display-6 fw-bold mt-1">Featured Projects</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Hands-on applications developed with focus on modularity, UI clarity, and reliable state handling.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+          <button class="btn btn-sm btn-outline-primary active project-filter-btn rounded-pill px-3" data-filter="all">All Projects</button>
+          <button class="btn btn-sm btn-outline-primary project-filter-btn rounded-pill px-3" data-filter="webapp">Web Apps</button>
+          <button class="btn btn-sm btn-outline-primary project-filter-btn rounded-pill px-3" data-filter="dashboard">Dashboards</button>
+          <button class="btn btn-sm btn-outline-primary project-filter-btn rounded-pill px-3" data-filter="games">Games & Utilities</button>
+        </div>
+
+        <div class="row g-4" id="projectsContainer">
+          <!-- Project 1: React Business Web Application -->
+          <div class="col-md-6 col-lg-4 project-item" data-category="webapp">
+            <div class="glass-card h-100 d-flex flex-column overflow-hidden">
+              <div class="p-4 border-bottom border-secondary border-opacity-10 bg-primary bg-opacity-10 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-briefcase-fill text-primary fs-4"></i>
+                  <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">Commercial Web App</span>
+                </div>
+                <i class="bi bi-arrow-up-right-circle text-body-secondary fs-5"></i>
+              </div>
+              <div class="p-4 d-flex flex-column flex-grow-1">
+                <h4 class="h5 fw-bold mb-2">React Business Web Application</h4>
+                <p class="text-body-secondary small flex-grow-1">
+                  A high-performance enterprise web solution featuring responsive component architecture, interactive contact handling, modern service catalogs, and API integration.
+                </p>
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                  <span class="badge bg-secondary bg-opacity-25 text-body">React</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Bootstrap 5</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">JavaScript ES6</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">REST API</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-primary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1" onclick="openDemoModal('React Business Web Application', 'A commercial grade business web platform built with scalable React components, animated sections, contact inquiry validation, and mobile optimization.')">
+                    <i class="bi bi-play-circle"></i> Demo
+                  </button>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-github"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Productivity & Life-Metrics Dashboard -->
+          <div class="col-md-6 col-lg-4 project-item" data-category="dashboard">
+            <div class="glass-card h-100 d-flex flex-column overflow-hidden">
+              <div class="p-4 border-bottom border-secondary border-opacity-10 bg-info bg-opacity-10 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-bar-chart-fill text-info fs-4"></i>
+                  <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25">Productivity Tool</span>
+                </div>
+                <i class="bi bi-arrow-up-right-circle text-body-secondary fs-5"></i>
+              </div>
+              <div class="p-4 d-flex flex-column flex-grow-1">
+                <h4 class="h5 fw-bold mb-2">Interactive Life-Metrics Dashboard</h4>
+                <p class="text-body-secondary small flex-grow-1">
+                  A personal analytics workspace tracking daily learning velocity, habit streaks, project milestones, and multidisciplinary subject mastery with dynamic data visualization.
+                </p>
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                  <span class="badge bg-secondary bg-opacity-25 text-body">JavaScript</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">CSS Grid</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Local Storage</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Charts API</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-primary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1" onclick="openDemoModal('Interactive Life-Metrics Dashboard', 'Tracks holistic engineering habits, coding hours, study milestones, and delivers real-time task completion statistics with zero server latency.')">
+                    <i class="bi bi-play-circle"></i> Demo
+                  </button>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-github"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Interactive Web Game / Utility Tool -->
+          <div class="col-md-6 col-lg-4 project-item" data-category="games">
+            <div class="glass-card h-100 d-flex flex-column overflow-hidden">
+              <div class="p-4 border-bottom border-secondary border-opacity-10 bg-warning bg-opacity-10 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-controller text-warning fs-4"></i>
+                  <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25">Vanilla JS Engine</span>
+                </div>
+                <i class="bi bi-arrow-up-right-circle text-body-secondary fs-5"></i>
+              </div>
+              <div class="p-4 d-flex flex-column flex-grow-1">
+                <h4 class="h5 fw-bold mb-2">Interactive Web Game & Logic Engine</h4>
+                <p class="text-body-secondary small flex-grow-1">
+                  Engineered using pure DOM manipulation and JavaScript event loops. Showcases state synchronization, high-score tracking, and snappy responsive animations without heavy dependencies.
+                </p>
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Vanilla JS</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">HTML5 Canvas / DOM</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">CSS Keyframes</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Algorithms</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-primary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1" onclick="openDemoModal('Interactive Web Game & Logic Engine', 'A responsive browser game testing memory and sequence logic, demonstrating clean decoupled JS architecture and state machines.')">
+                    <i class="bi bi-play-circle"></i> Demo
+                  </button>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-github"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="experience" class="py-5 bg-body-tertiary bg-opacity-50">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="section-tag">// Journey</span>
+          <h2 class="display-6 fw-bold mt-1">Experience & Academics</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Timeline of practical engineering training and academic foundations.</p>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="timeline">
+
+              <!-- Timeline Item 1 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="glass-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">Web Development Intern / Industry Project</h5>
+                    <span class="badge bg-primary bg-opacity-25 text-primary">Practical Internship</span>
+                  </div>
+                  <h6 class="text-body-secondary fw-semibold small mb-2">CE0318 / Engineering Practicum</h6>
+                  <p class="text-body-secondary small mb-3">
+                    Collaborated on real-world frontend web development initiatives. Built and maintained modular UI components, enhanced mobile responsiveness across varying display resolutions, and streamlined form data validations.
+                  </p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-body-secondary text-body font-code">Frontend Development</span>
+                    <span class="badge bg-body-secondary text-body font-code">Bootstrap</span>
+                    <span class="badge bg-body-secondary text-body font-code">JavaScript</span>
+                    <span class="badge bg-body-secondary text-body font-code">Git Workflow</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Timeline Item 2 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="glass-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">B.Tech in Computer Science and Engineering</h5>
+                    <span class="badge bg-info bg-opacity-25 text-info">Ongoing Academics</span>
+                  </div>
+                  <h6 class="text-body-secondary fw-semibold small mb-2">Indus Institute of Technology and Engineering (IITE)</h6>
+                  <p class="text-body-secondary small mb-3">
+                    Immersed in fundamental core computer science curricula: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems (DBMS), Operating Systems, and Modern Web Architectures.
+                  </p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-body-secondary text-body font-code">Data Structures & Algo</span>
+                    <span class="badge bg-body-secondary text-body font-code">DBMS / SQL</span>
+                    <span class="badge bg-body-secondary text-body font-code">Software Engineering</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Timeline Item 3 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="glass-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">Self-Directed Engineering & Exploration</h5>
+                    <span class="badge bg-success bg-opacity-25 text-success">Continuous Learning</span>
+                  </div>
+                  <h6 class="text-body-secondary fw-semibold small mb-2">Open-Source & Polymathic Research</h6>
+                  <p class="text-body-secondary small mb-0">
+                    Continuously designing lightweight web tools, exploring developer ergonomics, participating in technical workshops, and maintaining clean code repos for peer collaboration.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="section-tag">// Connect</span>
+          <h2 class="display-6 fw-bold mt-1">Get in Touch</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Interested in internship opportunities, technical collaborations, or discussions? Reach out!</p>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+          <!-- Contact Info Cards -->
+          <div class="col-lg-5">
+            <div class="glass-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <h4 class="h5 fw-bold mb-4">Contact Information</h4>
+                
+                <div class="d-flex flex-column gap-4">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="p-3 rounded-circle bg-primary bg-opacity-10 text-primary">
+                      <i class="bi bi-envelope-at fs-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-body-secondary small">Email Address</div>
+                      <a href="mailto:maharudrasinhrathore@gmail.com" class="fw-semibold text-decoration-none text-body">
+                        maharudrasinhrathore@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="p-3 rounded-circle bg-info bg-opacity-10 text-info">
+                      <i class="bi bi-geo-alt fs-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-body-secondary small">Location</div>
+                      <div class="fw-semibold">Gujarat, India</div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center gap-1">
+                    <div class="p-3 rounded-circle bg-warning bg-opacity-10 text-warning">
+                      <i class="bi bi-github fs-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-body-secondary small">GitHub Profile</div>
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none text-body">
+                        github.com/MaharudrasinhRathore
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-4 border-top border-secondary border-opacity-25">
+                <span class="small text-body-secondary">Active response window: Typically within 24 hours.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form with Client-Side Validation -->
+          <div class="col-lg-7">
+            <div class="glass-card p-4 p-md-5 h-100">
+              <h4 class="h5 fw-bold mb-3">Send a Message</h4>
+              
+              <form id="portfolioContactForm" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="senderName" class="form-label small fw-semibold">Your Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control rounded-3" id="senderName" placeholder="e.g. OM RANA" required>
+                    <div class="invalid-feedback">Please provide your name.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="senderEmail" class="form-label small fw-semibold">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control rounded-3" id="senderEmail" placeholder="name@domain.com" required>
+                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="messageSubject" class="form-label small fw-semibold">Subject <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control rounded-3" id="messageSubject" placeholder="Internship Inquiry / Project Discussion" required>
+                    <div class="invalid-feedback">Please enter a subject.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="messageContent" class="form-label small fw-semibold">Message <span class="text-danger">*</span></label>
+                    <textarea class="form-control rounded-3" id="messageContent" rows="5" placeholder="Share your message or opportunity details..." required></textarea>
+                    <div class="invalid-feedback">Please enter your message.</div>
+                  </div>
+
+                  <div class="col-12 pt-2">
+                    <button type="submit" id="submitFormBtn" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold d-inline-flex align-items-center gap-2">
+                      <span id="btnText">Send Message</span>
+                      <i class="bi bi-send-fill"></i>
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary px-3 py-2 rounded-pill ms-2">Reset</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-4 border-top border-secondary border-opacity-10 bg-body-tertiary">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div class="text-center text-md-start">
+        <span class="font-code fw-semibold text-primary">&lt;Maharudrasinh Karansinh Jetavat /&gt;</span>
+        <div class="small text-body-secondary mt-1">&copy; <span id="currentYear"></span> All rights reserved. Designed for academic & internship evaluation.</div>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="GitHub">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="LinkedIn">
+          <i class="bi bi-linkedin"></i>
+        </a>
+        <a href="mailto:maharudrasinh.jetavat@example.com" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Email">
+          <i class="bi bi-envelope-fill"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTopBtn" class="btn btn-primary rounded-circle shadow-lg p-3" aria-label="Scroll back to top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Resume Preview Modal -->
+  <div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content glass-card border border-secondary border-opacity-25">
+        <div class="modal-header border-bottom border-secondary border-opacity-25">
+          <h5 class="modal-title fw-bold" id="resumeModalLabel">
+            <i class="bi bi-file-earmark-person text-primary me-2"></i>Curriculum Vitae Preview
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="p-4 rounded-3 border border-secondary border-opacity-25 bg-body-tertiary">
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-3">
+              <div>
+                <h4 class="fw-bold mb-0">Maharudrasinh Karansinh Jetavat</h4>
+                <p class="text-body-secondary small mb-0">Computer Science Engineering | IITE</p>
+              </div>
+              <span class="badge bg-success bg-opacity-10 text-success border border-success">Verified Profile</span>
+            </div>
+            <div class="small text-body-secondary mb-3">
+              <strong>Core Competencies:</strong> Full-Stack Development (React, Bootstrap, Vanilla JavaScript), Object-Oriented Programming (Python, C++), Data Structures, RESTful APIs, Git/GitHub.
+            </div>
+            <div class="small text-body-secondary mb-3">
+              <strong>Academics:</strong> Bachelor of Technology (CSE) - Indus Institute of Technology and Engineering. Strong focus on practical implementations and coursework excellence.
+            </div>
+            <div class="alert alert-info py-2 px-3 small d-flex align-items-center gap-2 mb-0">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Official resume copy is kept updated for internship reviews.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary border-opacity-25">
+          <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary rounded-pill" onclick="triggerResumeDownload()">
+            <i class="bi bi-download me-1"></i> Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Details / Demo Modal -->
+  <div class="modal fade" id="projectDemoModal" tabindex="-1" aria-labelledby="projectDemoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border border-secondary border-opacity-25">
+        <div class="modal-header border-bottom border-secondary border-opacity-25">
+          <h5 class="modal-title fw-bold" id="projectDemoModalLabel">Project Demonstration</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <div class="p-3 bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex mb-3">
+            <i class="bi bi-laptop fs-1"></i>
+          </div>
+          <h5 id="modalProjectTitle" class="fw-bold mb-2">Project Name</h5>
+          <p id="modalProjectDesc" class="text-body-secondary small mb-4">Detailed project brief will appear here.</p>
+          <div class="p-3 rounded bg-body-tertiary border border-secondary border-opacity-10 text-start small font-code mb-3">
+            <div>Status: <span class="text-success">Active build verified</span></div>
+            <div>Deployment: GitHub Pages / Live Sandbox</div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary border-opacity-25">
+          <button type="button" class="btn btn-primary rounded-pill w-100" data-bs-dismiss="modal">Acknowledge</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container-custom">
+    <div id="actionToast" class="toast align-items-center text-bg-primary border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i id="toastIcon" class="bi bi-check-circle-fill fs-5"></i>
+          <span id="toastMessage">Action completed successfully!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle (with Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Set dynamic current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    /* ==========================================================
+       1. Dark / Light Mode Switcher with LocalStorage Persistence
+       ========================================================== */
+    const htmlElement = document.documentElement;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+
+    // Retrieve saved theme or system preference
+    const savedTheme = localStorage.getItem('site-theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    function applyTheme(theme) {
+      htmlElement.setAttribute('data-bs-theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-moon-stars-fill text-warning';
+      } else {
+        themeIcon.className = 'bi bi-sun-fill text-warning';
+      }
+      localStorage.setItem('site-theme', theme);
+    }
+
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-bs-theme');
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    });
+
+    /* ==========================================================
+       2. Dynamic Typing Text Effect
+       ========================================================== */
+    const dynamicRoles = [
+      'Full-Stack Web Applications',
+      'Interactive UI Experiences',
+      'Clean Code Architectures',
+      'Analytical Software Systems'
+    ];
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingSpeed = 90;
+    const deletingSpeed = 45;
+    const holdDuration = 1800;
+    const typedElement = document.getElementById('typed-text');
+
+    function typeLoop() {
+      const currentRole = dynamicRoles[roleIndex];
+
+      if (!isDeleting) {
+        typedElement.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentRole.length) {
+          isDeleting = true;
+          setTimeout(typeLoop, holdDuration);
+          return;
+        }
+      } else {
+        typedElement.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % dynamicRoles.length;
+        }
+      }
+
+      setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
+    }
+
+    // Initialize typing loop after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typedElement) typeLoop();
+    });
+
+    /* ==========================================================
+       3. Project Filtering Logic
+       ========================================================== */
+    const filterButtons = document.querySelectorAll('.project-filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filterValue = button.getAttribute('data-filter');
+
+        projectItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'scale(1)';
+            }, 50);
+          } else {
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              item.style.display = 'none';
+            }, 250);
+          }
+        });
+      });
+    });
+
+    /* ==========================================================
+       4. Floating Back to Top Button
+       ========================================================== */
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    /* ==========================================================
+       5. Contact Form Validation & Toast Notification
+       ========================================================== */
+    const contactForm = document.getElementById('portfolioContactForm');
+    const toastElement = document.getElementById('actionToast');
+    const toastMessage = document.getElementById('toastMessage');
+    const bsToast = new bootstrap.Toast(toastElement, { delay: 4000 });
+
+    contactForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!contactForm.checkValidity()) {
+        contactForm.classList.add('was-validated');
+        return;
+      }
+
+      // Simulate sending state
+      const submitBtn = document.getElementById('submitFormBtn');
+      const btnText = document.getElementById('btnText');
+      const originalText = btnText.textContent;
+
+      submitBtn.disabled = true;
+      btnText.textContent = 'Transmitting...';
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        btnText.textContent = originalText;
+        contactForm.reset();
+        contactForm.classList.remove('was-validated');
+
+        toastMessage.textContent = 'Thank you! Your message has been sent successfully.';
+        bsToast.show();
+      }, 900);
+    });
+
+    /* ==========================================================
+       6. Project Demo & Resume Modal Helpers
+       ========================================================== */
+    const projectDemoModal = new bootstrap.Modal(document.getElementById('projectDemoModal'));
+
+    function openDemoModal(title, description) {
+      document.getElementById('modalProjectTitle').textContent = title;
+      document.getElementById('modalProjectDesc').textContent = description;
+      projectDemoModal.show();
+    }
+
+    function triggerResumeDownload() {
+      toastMessage.textContent = 'Preparing resume download package...';
+      bsToast.show();
+
+      // Trigger a clean sample text file download representation
+      const sampleContent = 
+`=============================================================
+RESUME: MAHARUDRASINH KARANSINH JETAVAT
+Computer Science Engineering | Full-Stack Developer
+Institution: Indus Institute of Technology and Engineering (IITE)
+Location: Gujarat, India
+=============================================================
+TECHNICAL FOCUS:
+- Languages: HTML5, CSS3, JavaScript (ES6+), Python, C/C++, SQL
+- Frameworks: React, Bootstrap 5, Express.js basics
+- Tooling: Git, GitHub, REST APIs, VS Code, Postman
+- Core: Data Structures, OOP, Responsive Design, System Logic
+=============================================================`;
+      
+      const blob = new Blob([sampleContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const tempLink = document.createElement('a');
+      tempLink.href = url;
+      tempLink.download = 'Maharudrasinh_Jetavat_Resume.txt';
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
