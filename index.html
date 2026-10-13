@@ -3,57 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maharudrasinh Karansinh Jetavat | CSE Portfolio</title>
-  
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Google Fonts -->
+  <title>Maharudrasinh Karansinh Jetavat | CSE Student & Full-Stack Developer</title>
+  <meta name="description" content="Personal Portfolio of Maharudrasinh Karansinh Jetavat - B.Tech CSE Student at IITE, Full-Stack Developer, and Creative Technologist.">
+  <meta name="author" content="Maharudrasinh Karansinh Jetavat">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons 1.11.3 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <style>
     :root {
       --primary-accent: #3b82f6;
       --primary-accent-rgb: 59, 130, 246;
       --secondary-accent: #06b6d4;
-      --navy-dark: #0f172a;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --secondary-accent-rgb: 6, 182, 212;
+      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      --card-radius: 1rem;
+      --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     [data-bs-theme="dark"] {
-      --card-bg: rgba(22, 27, 34, 0.75);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg-surface: #0a0f1d;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(59, 130, 246, 0.5);
+      --canvas-particle-color: rgba(96, 165, 250, 0.7);
+      --canvas-line-color: rgba(59, 130, 246, 0.18);
       --terminal-bg: #0b0f19;
     }
 
     [data-bs-theme="light"] {
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --card-border: rgba(0, 0, 0, 0.08);
+      --bg-surface: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --card-hover-border: rgba(37, 99, 235, 0.45);
+      --canvas-particle-color: rgba(37, 99, 235, 0.7);
+      --canvas-line-color: rgba(37, 99, 235, 0.12);
       --terminal-bg: #1e293b;
     }
 
     body {
-      font-family: var(--font-body);
-      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-surface);
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .font-mono {
-      font-family: var(--font-mono);
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Ambient particle background */
-    #particleCanvas {
+    /* Ambient Hero Particle Canvas */
+    #heroCanvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
+      pointer-events: auto;
       z-index: 0;
     }
 
@@ -62,43 +76,85 @@
       z-index: 1;
     }
 
-    /* Glass Cards & 3D Tilt */
-    .interactive-card {
+    /* Ambient Background Glow */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient-blob-1 {
+      position: absolute;
+      top: -15%;
+      left: 20%;
+      width: 500px;
+      height: 500px;
+      background: rgba(59, 130, 246, 0.12);
+      filter: blur(140px);
+      border-radius: 50%;
+    }
+    .ambient-blob-2 {
+      position: absolute;
+      top: 45%;
+      right: 5%;
+      width: 480px;
+      height: 480px;
+      background: rgba(6, 182, 212, 0.1);
+      filter: blur(140px);
+      border-radius: 50%;
+    }
+
+    /* Glassmorphism Cards with 3D Tilt */
+    .glass-card {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
-      border-radius: 1rem;
-      transition: transform 0.15s ease-out, box-shadow 0.25s ease, border-color 0.25s ease;
+      border-radius: var(--card-radius);
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
       transform-style: preserve-3d;
-      perspective: 1000px;
+      will-change: transform;
+    }
+    .glass-card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.25);
     }
 
-    .interactive-card:hover {
-      border-color: rgba(var(--primary-accent-rgb), 0.45);
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.35);
-    }
-
-    /* Gradient Typography */
     .text-gradient {
-      background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 50%, #818cf8 100%);
+      background: var(--accent-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .cursor-blink {
+    .navbar {
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-link {
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .nav-link.active, .nav-link:hover {
+      color: var(--primary-accent) !important;
+    }
+
+    /* Animated typing cursor */
+    .typed-cursor {
       display: inline-block;
-      width: 2px;
-      background-color: var(--primary-accent);
-      animation: blink 0.9s infinite;
-      margin-left: 2px;
+      width: 2.5px;
+      background: var(--primary-accent);
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
     }
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
 
-    /* Interactive Timeline */
+    /* Timeline Styling */
     .timeline {
       position: relative;
       padding-left: 2rem;
@@ -110,7 +166,7 @@
       top: 10px;
       bottom: 0;
       width: 2px;
-      background: var(--card-border);
+      background: linear-gradient(to bottom, #3b82f6, #06b6d4, var(--card-border));
     }
     .timeline-item {
       position: relative;
@@ -125,41 +181,95 @@
       height: 16px;
       border-radius: 50%;
       background: var(--primary-accent);
-      border: 3px solid var(--bs-body-bg);
-      box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.6);
+      border: 3px solid var(--bg-surface);
+      box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.5);
     }
 
-    /* Floating Interactive Developer CLI */
-    .terminal-toggle-btn {
+    /* Interactive Skill Pills */
+    .skill-pill {
+      background: rgba(var(--primary-accent-rgb), 0.08);
+      border: 1px solid rgba(var(--primary-accent-rgb), 0.22);
+      border-radius: 9999px;
+      padding: 0.42rem 0.9rem;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition-smooth);
+    }
+    .skill-pill:hover, .skill-pill.active-pill {
+      background: rgba(var(--primary-accent-rgb), 0.2);
+      border-color: var(--primary-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(var(--primary-accent-rgb), 0.25);
+    }
+
+    /* Floating Utilities */
+    .floating-tools {
       position: fixed;
       bottom: 24px;
       right: 24px;
       z-index: 1040;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-
-    .cli-window {
-      position: fixed;
-      bottom: 85px;
-      right: 24px;
-      width: 380px;
-      max-width: calc(100vw - 48px);
-      background: var(--terminal-bg);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 0.75rem;
-      z-index: 1040;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-      display: none;
+      display: flex;
       flex-direction: column;
-      overflow: hidden;
+      gap: 10px;
+    }
+    .floating-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: var(--transition-smooth);
+    }
+    .floating-btn:hover {
+      transform: scale(1.08);
+    }
+    #backToTopBtn {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    #backToTopBtn.show {
+      opacity: 1;
+      visibility: visible;
     }
 
-    .cli-output {
-      height: 220px;
+    /* Terminal CLI Window */
+    #cliTerminalModal .modal-content {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      font-family: 'JetBrains Mono', monospace;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .terminal-body {
+      height: 340px;
       overflow-y: auto;
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: #94a3b8;
+      background: #090d13;
+      padding: 1rem;
+      font-size: 0.86rem;
+    }
+    .terminal-input-wrapper {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: #161b22;
+      border-top: 1px solid #30363d;
+    }
+    .terminal-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #58a6ff;
+      font-family: inherit;
+      width: 100%;
+      margin-left: 0.5rem;
     }
 
     /* Two-Column Printable Resume Template */
@@ -167,733 +277,846 @@
       background: #ffffff;
       color: #1e293b;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       position: relative;
       overflow: hidden;
     }
-    .navy-corner {
+    .resume-sheet .navy-corner {
       position: absolute;
       top: 0;
       right: 0;
       width: 0;
       height: 0;
-      border-top: 100px solid #1e3a5f;
-      border-left: 100px solid transparent;
+      border-top: 110px solid #1e3a5f;
+      border-left: 110px solid transparent;
       z-index: 1;
     }
+    .resume-sheet h1, .resume-sheet h2, .resume-sheet h3, .resume-sheet h4, .resume-sheet h5 {
+      color: #0f2744;
+    }
     .resume-section-title {
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #0f2744;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding-bottom: 3px;
+      gap: 0.5rem;
+      padding-bottom: 4px;
       border-bottom: 2px solid #0f2744;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
     }
     .resume-badge {
       background: #e2e8f0;
       color: #0f2744;
       font-weight: 600;
       font-size: 0.72rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.28rem 0.55rem;
       border-radius: 9999px;
       display: inline-block;
-      margin: 0.15rem;
+      margin: 0.15rem 0.15rem;
+    }
+    .resume-skill-table td {
+      padding: 0.3rem 0.4rem;
+      font-size: 0.78rem;
+      vertical-align: top;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .resume-skill-label {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 2px 6px;
+      white-space: nowrap;
     }
 
     @media print {
-      body * { visibility: hidden; }
-      #resumeModal, #resumeModal * { visibility: visible; }
-      #resumeModal { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; }
-      .modal-header, .modal-footer, .btn-close { display: none !important; }
+      body * {
+        visibility: hidden;
+      }
+      #resumeModal, #resumeModal * {
+        visibility: visible;
+      }
+      #resumeModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .modal-header, .modal-footer, .btn-close {
+        display: none !important;
+      }
+      .resume-sheet {
+        box-shadow: none !important;
+      }
     }
   </style>
 </head>
-<body class="bg-body text-body">
+<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="100" tabindex="0">
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg sticky-top border-bottom border-secondary-subtle bg-body-tertiary bg-opacity-75 backdrop-blur py-3">
-    <div class="container">
-      <a class="navbar-brand fw-bold tracking-tight text-gradient fs-4" href="#home">
-        Maharudrasinh Jetavat
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-1">
-          <li class="nav-item"><a class="nav-link px-3" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#skills">Skills</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#projects">Projects</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#experience">Education</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="#contact">Contact</a></li>
-          <li class="nav-item ms-lg-2">
-            <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1" aria-label="Toggle theme">
-              <i class="bi bi-moon-stars-fill me-1" id="themeIcon"></i>
-              <span id="themeText">Dark</span>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!-- Ambient Glow -->
+  <div class="ambient-bg">
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
+  </div>
 
-  <!-- Hero Section -->
-  <section id="home" class="min-vh-100 position-relative d-flex align-items-center py-5 overflow-hidden">
-    <canvas id="particleCanvas"></canvas>
-    
-    <div class="container hero-content py-5">
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-7">
-          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-10 text-primary border border-primary-subtle small fw-semibold mb-3">
-            <span class="spinner-grow spinner-grow-sm text-primary" role="status"></span>
-            B.Tech Computer Science & Engineering • 3rd Year
-          </div>
-          <h1 class="display-3 fw-bold tracking-tight mb-3">
-            Hi, I'm <br><span class="text-gradient">Maharudrasinh Karansinh Jetavat</span>
-          </h1>
-          <h2 class="h4 text-body-secondary fw-normal mb-4">
-            Focused on <span class="fw-semibold text-primary font-mono" id="typingText"></span><span class="cursor-blink">|</span>
-          </h2>
-          <p class="lead text-secondary mb-4 col-xl-10">
-            Computer Science & Engineering student with a background in IT, web engineering, and software systems. Dedicated to creating high-performance interactive applications, clean UI/UX, and robust logic.
-          </p>
+  <header>
+    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top bg-body-tertiary bg-opacity-75">
+      <div class="container py-1">
+        <a class="navbar-brand fw-bold tracking-tight text-gradient fs-4 d-flex align-items-center gap-2" href="#home">
+          <i class="bi bi-code-slash text-primary"></i>
+          <span>Maharudrasinh Jetavat</span>
+        </a>
 
-          <div class="d-flex flex-wrap gap-3 mb-5">
-            <a href="#projects" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm">
-              <i class="bi bi-code-slash me-2"></i>Explore Projects
-            </a>
-            <button class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#resumeModal">
-              <i class="bi bi-file-earmark-person me-2"></i>View Resume
-            </button>
-          </div>
-
-          <!-- Hero Metrics -->
-          <div class="row g-3 col-xl-11">
-            <div class="col-4">
-              <div class="interactive-card p-3 text-center">
-                <h4 class="fw-bold mb-0 text-primary">IITE</h4>
-                <small class="text-body-secondary">B.Tech (CSE)</small>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="interactive-card p-3 text-center">
-                <h4 class="fw-bold mb-0 text-primary">7.56</h4>
-                <small class="text-body-secondary">4th Sem SGPA</small>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="interactive-card p-3 text-center">
-                <h4 class="fw-bold mb-0 text-primary">Full-Stack</h4>
-                <small class="text-body-secondary">Web & Apps</small>
-              </div>
-            </div>
-          </div>
+        <div class="d-flex align-items-center gap-2 order-lg-last ms-auto ms-lg-0">
+          <button id="themeToggleBtn" class="btn btn-outline-secondary border-0 rounded-circle p-2 d-flex align-items-center justify-content-center" type="button" aria-label="Toggle theme">
+            <i id="themeIcon" class="bi bi-moon-stars-fill text-warning"></i>
+          </button>
+          <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-3"></i>
+          </button>
         </div>
 
-        <div class="col-lg-5">
-          <div class="interactive-card p-4 border border-secondary-subtle">
-            <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3 border-secondary-subtle">
-              <div class="d-flex gap-2">
-                <div class="rounded-circle bg-danger" style="width: 10px; height: 10px;"></div>
-                <div class="rounded-circle bg-warning" style="width: 10px; height: 10px;"></div>
-                <div class="rounded-circle bg-success" style="width: 10px; height: 10px;"></div>
-              </div>
-              <span class="small font-mono text-secondary">profile_data.json</span>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+          <ul class="navbar-nav mb-2 mb-lg-0 gap-lg-3 text-center">
+            <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#experience">Education</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="min-vh-100 d-flex align-items-center position-relative pt-5 overflow-hidden">
+      <!-- Interactive Constellation Canvas -->
+      <canvas id="heroCanvas"></canvas>
+
+      <div class="container hero-content pt-5">
+        <div class="row align-items-center gy-5">
+          <div class="col-lg-7 text-center text-lg-start">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill border border-primary border-opacity-25 bg-primary bg-opacity-10">
+              <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+              <span class="small fw-semibold text-primary">B.Tech CSE Student • Available for Internships</span>
             </div>
-            <pre class="font-mono small mb-0 text-body" style="line-height: 1.6;"><code>{
+
+            <h1 class="display-3 fw-bold mb-3 lh-sm">
+              Hi, I'm <br>
+              <span class="text-gradient">Maharudrasinh Karansinh Jetavat</span>
+            </h1>
+
+            <div class="h4 fw-medium text-body-secondary mb-4 font-mono d-flex justify-content-center justify-content-lg-start align-items-center" style="min-height: 42px;">
+              <span>Focus:&nbsp;</span>
+              <span id="typed-text" class="text-primary fw-semibold"></span>
+              <span class="typed-cursor">&nbsp;</span>
+            </div>
+
+            <p class="lead text-body-secondary mb-4 pe-lg-4" style="max-width: 620px;">
+              Computer Science & Engineering student at IITE specializing in modern frontend architecture, interactive web applications, and foundational problem-solving.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-5">
+              <a href="#projects" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm d-flex align-items-center gap-2">
+                <i class="bi bi-stars"></i>
+                <span>Explore Projects</span>
+              </a>
+              <button class="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                <i class="bi bi-file-earmark-person"></i>
+                <span>View Official Resume</span>
+              </button>
+              <button class="btn btn-outline-primary px-3 py-2 rounded-pill fw-semibold font-mono d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#cliTerminalModal">
+                <i class="bi bi-terminal"></i>
+                <span>Run CLI</span>
+              </button>
+            </div>
+
+            <!-- Quick Metrics with 3D Tilt -->
+            <div class="row g-3 justify-content-center justify-content-lg-start">
+              <div class="col-auto">
+                <div class="p-3 glass-card tilt-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-mortarboard-fill fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">IITE</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">B.Tech (CSE)</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="p-3 glass-card tilt-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-graph-up-arrow fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">7.56 SGPA</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">4th Sem Milestone</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="p-3 glass-card tilt-card d-flex align-items-center gap-3">
+                  <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-layers-fill fs-5"></i>
+                  </div>
+                  <div class="text-start">
+                    <div class="fw-bold small">Full-Stack</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Hands-on Projects</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Card with 3D Tilt -->
+          <div class="col-lg-5 text-center">
+            <div class="glass-card tilt-card p-4 text-start shadow-lg mx-auto" style="max-width: 440px;">
+              <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+                <div class="d-flex gap-2">
+                  <span class="rounded-circle bg-danger d-inline-block" style="width: 12px; height: 12px;"></span>
+                  <span class="rounded-circle bg-warning d-inline-block" style="width: 12px; height: 12px;"></span>
+                  <span class="rounded-circle bg-success d-inline-block" style="width: 12px; height: 12px;"></span>
+                </div>
+                <span class="font-mono small text-body-secondary">profile_data.json</span>
+              </div>
+              <pre class="font-mono small m-0 text-body" style="line-height: 1.6;"><code>{
   <span class="text-primary">"name"</span>: <span class="text-success">"Maharudrasinh Jetavat"</span>,
-  <span class="text-primary">"degree"</span>: <span class="text-success">"B.Tech CSE (3rd Year)"</span>,
+  <span class="text-primary">"role"</span>: <span class="text-success">"CSE Student & Full-Stack Developer"</span>,
   <span class="text-primary">"institution"</span>: <span class="text-success">"IITE"</span>,
-  <span class="text-primary">"diploma"</span>: <span class="text-success">"Information Technology (6.52 CGPA)"</span>,
-  <span class="text-primary">"location"</span>: <span class="text-success">"Ahmedabad, Gujarat"</span>,
-  <span class="text-primary">"status"</span>: <span class="text-warning">"Open to Internships"</span>
+  <span class="text-primary">"degree"</span>: <span class="text-success">"B.Tech CSE (3rd Year, 5th Sem)"</span>,
+  <span class="text-primary">"sgpa_sem4"</span>: <span class="text-warning">7.56</span>,
+  <span class="text-primary">"diploma_cgpa"</span>: <span class="text-warning">6.52</span>,
+  <span class="text-primary">"location"</span>: <span class="text-success">"Ahmedabad, Gujarat, India"</span>
 }</code></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Me -->
-  <section id="about" class="py-5 border-top border-secondary-subtle">
-    <div class="container py-4">
-      <div class="row align-items-center gy-4">
-        <div class="col-lg-6">
-          <span class="badge bg-primary-subtle text-primary mb-2">// PROFESSIONAL SUMMARY</span>
-          <h2 class="display-6 fw-bold mb-3">Analytical Mindset with Engineering Focus</h2>
-          <p class="text-secondary leading-relaxed">
-            Third-year B.Tech Computer Science & Engineering student with a Diploma in Information Technology and foundational knowledge of programming, web development, databases, and core computer science concepts.
-          </p>
-          <p class="text-secondary leading-relaxed">
-            Hands-on exposure to healthcare and sports-oriented web application projects through team-based development and innovation activities. Experienced in project presentations, research, information organization, and collaborative work.
-          </p>
-          <div class="row g-3 mt-2">
-            <div class="col-6">
-              <div class="p-3 border rounded-3 bg-body-tertiary">
-                <i class="bi bi-geo-alt text-primary fs-5"></i>
-                <div class="fw-semibold mt-1">Location</div>
-                <small class="text-secondary">Ahmedabad, Gujarat</small>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="p-3 border rounded-3 bg-body-tertiary">
-                <i class="bi bi-mortarboard text-primary fs-5"></i>
-                <div class="fw-semibold mt-1">Academics</div>
-                <small class="text-secondary">4th Sem SGPA: 7.56</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="p-4 rounded-4 bg-body-tertiary border">
-            <h5 class="fw-bold mb-3"><i class="bi bi-patch-check text-primary me-2"></i>Core Strengths & Goals</h5>
-            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
-              <li class="d-flex align-items-start gap-3">
-                <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                <div>
-                  <strong>Polymathic Mindset:</strong> Merging algorithmic fundamentals with clean frontend architecture and practical usability.
-                </div>
-              </li>
-              <li class="d-flex align-items-start gap-3">
-                <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                <div>
-                  <strong>End-to-End Progression:</strong> Strong fundamentals starting from a Diploma in Information Technology through B.Tech CSE.
-                </div>
-              </li>
-              <li class="d-flex align-items-start gap-3">
-                <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                <div>
-                  <strong>Collaborative Delivery:</strong> Proven experience leading UI tasks and technical presentations in teams.
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Technical Skills -->
-  <section id="skills" class="py-5 bg-body-tertiary border-top border-secondary-subtle">
-    <div class="container py-4">
-      <div class="text-center max-w-xl mx-auto mb-4">
-        <span class="badge bg-primary-subtle text-primary">// TECHNICAL SKILLS</span>
-        <h2 class="display-6 fw-bold">Skills & Technologies</h2>
-        <p class="text-secondary">Type to filter skills in real-time or click any item to see specific application details.</p>
-      </div>
-
-      <!-- Live Search Filter -->
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-6 col-lg-5">
-          <div class="input-group">
-            <span class="input-group-text bg-body border-secondary-subtle"><i class="bi bi-search"></i></span>
-            <input type="text" id="skillSearchInput" class="form-control bg-body border-secondary-subtle" placeholder="Search skills (e.g., Python, Bootstrap, SQL)...">
-            <button class="btn btn-outline-secondary" type="button" id="clearSkillSearch">Reset</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dynamic Skill Feedback Card -->
-      <div class="alert alert-info d-none align-items-center justify-content-between mb-4 mx-auto max-w-2xl" id="skillDetailBanner">
-        <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-info-circle-fill fs-5"></i>
-          <span id="skillDetailText" class="small fw-semibold"></span>
-        </div>
-        <button type="button" class="btn-close btn-sm" onclick="document.getElementById('skillDetailBanner').classList.add('d-none')"></button>
-      </div>
-
-      <div class="row g-4" id="skillsContainer">
-        <!-- Programming & Web Tech -->
-        <div class="col-md-6 col-lg-4 skill-card-col">
-          <div class="interactive-card p-4 h-100">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <i class="bi bi-code-slash text-primary fs-3"></i>
-              <h5 class="fw-bold mb-0">Programming & Web</h5>
-            </div>
-            <div class="d-flex flex-wrap gap-2 skill-badge-list">
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="Python: Used for algorithmic problems and coursework.">Python</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="C / C++: Fundamental object-oriented and systems programming.">C / C++</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="HTML5: Semantic, accessible modern web standard structure.">HTML5</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="CSS3: Responsive flexbox, grids, animations, and layouts.">CSS3</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="JavaScript: Modern ES6+, DOM manipulation, dynamic UI components.">JavaScript</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="Bootstrap 5: Responsive layouts, component styling, utility-first classes.">Bootstrap 5</button>
-              <button class="btn btn-sm btn-outline-primary rounded-pill skill-tag" data-info="Responsive Design: Mobile-first media queries and adaptive layouts.">Responsive Web Design</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Core CS & Databases -->
-        <div class="col-md-6 col-lg-4 skill-card-col">
-          <div class="interactive-card p-4 h-100">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <i class="bi bi-database-check text-primary fs-3"></i>
-              <h5 class="fw-bold mb-0">Core CS & Data</h5>
-            </div>
-            <div class="d-flex flex-wrap gap-2 skill-badge-list">
-              <button class="btn btn-sm btn-outline-info rounded-pill skill-tag" data-info="Data Structures: Arrays, stacks, queues, trees, and complexity analysis.">Data Structures</button>
-              <button class="btn btn-sm btn-outline-info rounded-pill skill-tag" data-info="OOP: Encapsulation, inheritance, polymorphism, and abstraction design.">Object-Oriented Programming</button>
-              <button class="btn btn-sm btn-outline-info rounded-pill skill-tag" data-info="SQL: Relational schema design, queries, and joins.">SQL</button>
-              <button class="btn btn-sm btn-outline-info rounded-pill skill-tag" data-info="Database Concepts: Normalization, relational design, and data integrity.">Database Concepts</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Additional Exposure & Tools -->
-        <div class="col-md-6 col-lg-4 skill-card-col">
-          <div class="interactive-card p-4 h-100">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <i class="bi bi-tools text-primary fs-3"></i>
-              <h5 class="fw-bold mb-0">Exposure & Tools</h5>
-            </div>
-            <div class="d-flex flex-wrap gap-2 skill-badge-list">
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="React: Familiarity with functional components, JSX, and state hooks.">React</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="Node.js & Express: Backend JavaScript runtime environment.">Node.js</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="Express.js: Lightweight HTTP routing and middleware framework.">Express.js</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="UI/UX: Wireframing and human-centric user interface workflows.">UI/UX</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="Git & GitHub: Version control, branching, commits, and remote hosting.">Git & GitHub</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="VS Code: Primary IDE with extensions and debugging workflows.">VS Code</button>
-              <button class="btn btn-sm btn-outline-secondary rounded-pill skill-tag" data-info="Canva: Visual presentation and deck asset generation.">Canva</button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Featured Projects with Live Interactive Demos -->
-  <section id="projects" class="py-5 border-top border-secondary-subtle">
-    <div class="container py-4">
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
-        <div>
-          <span class="badge bg-primary-subtle text-primary">// PROJECT WORK</span>
-          <h2 class="display-6 fw-bold">Featured Projects</h2>
+    <section id="about" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="text-primary font-mono small fw-bold">// BACKGROUND</span>
+          <h2 class="display-6 fw-bold mt-1">About Me</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
         </div>
-        <p class="text-secondary mb-0">Hands-on applications evaluated across teamwork, frontend logic, and innovation.</p>
-      </div>
 
-      <div class="row g-4">
-        <!-- Project 1: Healthcare Consultation -->
-        <div class="col-lg-6">
-          <div class="interactive-card p-4 h-100 d-flex flex-column justify-content-between">
-            <div>
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <span class="badge bg-primary">Team Project • 8 Members</span>
-                <i class="bi bi-heart-pulse-fill text-danger fs-3"></i>
-              </div>
-              <h4 class="fw-bold mt-2">Healthcare Consultation & Health Management App</h4>
-              <p class="text-secondary mt-3">
-                Contributed to the frontend development of a healthcare-focused web application including homepage architecture, doctor appointment booking flow, medication scheduling, and health metrics tracking. Contributed to the concept of an NFC-based emergency card for instant emergency contact retrieval.
+        <div class="row gy-4 align-items-stretch">
+          <div class="col-lg-7">
+            <div class="glass-card tilt-card p-4 p-md-5 h-100">
+              <h3 class="h4 fw-bold mb-3">Foundational Rigor & Multidisciplinary Curiosity</h3>
+              <p class="text-body-secondary leading-relaxed mb-4">
+                Third-year B.Tech Computer Science & Engineering student with a Diploma in Information Technology and foundational knowledge of programming, web development, databases, and core computer science concepts. Hands-on exposure to healthcare and sports-oriented web application projects through team-based development and innovation activities.
               </p>
-              <div class="d-flex flex-wrap gap-2 mb-4">
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">HTML5</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">Bootstrap 5</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">JavaScript</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">SQL</span>
-              </div>
-            </div>
-            <div class="pt-3 border-top border-secondary-subtle d-flex flex-wrap gap-2">
-              <button class="btn btn-sm btn-primary px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#healthDemoModal">
-                <i class="bi bi-play-circle me-1"></i>Launch Live Demo
-              </button>
-              <a href="https://github.com/MaharudrasinhRathore" target="_blank" class="btn btn-sm btn-outline-secondary px-3 rounded-pill">
-                <i class="bi bi-github me-1"></i>GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 2: Sports Tournament Discovery -->
-        <div class="col-lg-6">
-          <div class="interactive-card p-4 h-100 d-flex flex-column justify-content-between">
-            <div>
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <span class="badge bg-success">Innovation Village Project</span>
-                <i class="bi bi-trophy-fill text-warning fs-3"></i>
-              </div>
-              <h4 class="fw-bold mt-2">Sports Tournament Discovery Platform</h4>
-              <p class="text-secondary mt-3">
-                A system engineered to help players connect with compatible teammates, locate nearby tournaments, and register for fixtures. Contributed to user experience research, UI wireframes, and delivered project presentations to academic evaluators.
+              <p class="text-body-secondary leading-relaxed mb-4">
+                Experienced in project presentations, research, information organization, and collaborative work. Interested in exploring opportunities in frontend development, software, digital technology, and fintech while continuing to develop technical skills.
               </p>
-              <div class="d-flex flex-wrap gap-2 mb-4">
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">Web Architecture</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">UI Prototyping</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">Research</span>
-                <span class="badge bg-secondary-subtle text-secondary-emphasis">Presentation</span>
+
+              <div class="row g-3 pt-2">
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-cpu text-primary fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Analytical Thinking</h6>
+                      <small class="text-body-secondary">System-oriented engineering</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-display text-info fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Responsive Web</h6>
+                      <small class="text-body-secondary">Interactive UI/UX interfaces</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-people text-success fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Team Collaboration</h6>
+                      <small class="text-body-secondary">Presentations & Research</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-lightning-charge text-warning fs-3"></i>
+                    <div>
+                      <h6 class="mb-0 fw-semibold">Continuous Growth</h6>
+                      <small class="text-body-secondary">Curiosity-driven learning</small>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="pt-3 border-top border-secondary-subtle d-flex flex-wrap gap-2">
-              <button class="btn btn-sm btn-success px-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#sportsDemoModal">
-                <i class="bi bi-play-circle me-1"></i>Launch Live Demo
-              </button>
-              <a href="https://github.com/MaharudrasinhRathore" target="_blank" class="btn btn-sm btn-outline-secondary px-3 rounded-pill">
-                <i class="bi bi-github me-1"></i>GitHub
-              </a>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="glass-card tilt-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <h4 class="h5 fw-bold mb-4 d-flex align-items-center gap-2">
+                  <i class="bi bi-person-badge text-primary"></i> Academic & Personal Snapshot
+                </h4>
+
+                <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Current Degree</span>
+                    <span class="fw-semibold">B.Tech - Computer Science & Engineering</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Institution</span>
+                    <span class="fw-semibold">Indus Institute of Technology and Engineering (IITE)</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Academic Record</span>
+                    <span class="fw-semibold">B.Tech 4th Sem SGPA: 7.56 | Diploma CGPA: 6.52</span>
+                  </li>
+                  <li class="pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="text-body-secondary d-block small">Location</span>
+                    <span class="fw-semibold">Ahmedabad, Gujarat, India</span>
+                  </li>
+                  <li>
+                    <span class="text-body-secondary d-block small">Email Address</span>
+                    <span class="fw-semibold font-mono small">maharudrasinhrathore@gmail.com</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                <button class="btn btn-outline-primary w-100 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#resumeModal">
+                  Inspect Verified Resume <i class="bi bi-eye ms-1"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Education & Milestones -->
-  <section id="experience" class="py-5 bg-body-tertiary border-top border-secondary-subtle">
-    <div class="container py-4">
-      <div class="text-center max-w-xl mx-auto mb-5">
-        <span class="badge bg-primary-subtle text-primary">// ACADEMIC TIMELINE</span>
-        <h2 class="display-6 fw-bold">Education & Credentials</h2>
-        <p class="text-secondary">Official academic records and verified learning credentials.</p>
-      </div>
+    <section id="skills" class="py-5 bg-body-tertiary bg-opacity-50">
+      <div class="container py-4">
+        <div class="text-center mb-4">
+          <span class="text-primary font-mono small fw-bold">// TECHNICAL TOOLKIT</span>
+          <h2 class="display-6 fw-bold mt-1">Skills & Technical Mastery</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Type in the search field to filter skills live, or click any pill for practical project exposure details.</p>
+        </div>
 
-      <div class="row g-5">
-        <div class="col-lg-6">
-          <h4 class="fw-bold mb-4"><i class="bi bi-mortarboard text-primary me-2"></i>Academic Timeline</h4>
-          <div class="timeline">
-            <div class="timeline-item">
-              <span class="badge bg-primary-subtle text-primary mb-1">2022 – Present</span>
-              <h5 class="fw-bold mb-1">Bachelor of Technology (B.Tech)</h5>
-              <div class="text-primary fw-semibold">Computer Science & Engineering</div>
-              <p class="text-secondary small mt-1 mb-1">Currently Pursuing | 3rd Year, 5th Semester</p>
-              <span class="badge bg-success-subtle text-success border border-success-subtle">4th Semester SGPA: 7.56</span>
-            </div>
-
-            <div class="timeline-item">
-              <span class="badge bg-secondary-subtle text-secondary mb-1">2019 – 2022</span>
-              <h5 class="fw-bold mb-1">Diploma in Information Technology</h5>
-              <div class="text-secondary fw-semibold">Completed</div>
-              <span class="badge bg-info-subtle text-info border border-info-subtle mt-1">CGPA: 6.52</span>
-            </div>
-
-            <div class="timeline-item">
-              <span class="badge bg-secondary-subtle text-secondary mb-1">2019</span>
-              <h5 class="fw-bold mb-1">Secondary Education (10th)</h5>
-              <span class="badge bg-light text-dark border mt-1">Percentage: 65%</span>
+        <!-- Interactive Skill Search Filter -->
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-6 col-lg-5">
+            <div class="input-group">
+              <span class="input-group-text bg-body-secondary border-secondary-subtle">
+                <i class="bi bi-search text-primary"></i>
+              </span>
+              <input type="text" id="skillSearchInput" class="form-control bg-body-secondary border-secondary-subtle" placeholder="Type to filter skills (e.g. Python, SQL, React, C++)...">
+              <button class="btn btn-outline-secondary" type="button" id="clearSkillBtn">Clear</button>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-6">
-          <h4 class="fw-bold mb-4"><i class="bi bi-award text-primary me-2"></i>Certifications & Activities</h4>
-          <div class="d-flex flex-column gap-3">
-            <div class="interactive-card p-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">Python for Beginners</span>
-                <span class="badge bg-primary-subtle text-primary">Great Learning</span>
+        <!-- Dynamic Selected Skill Info Banner -->
+        <div id="skillInfoBanner" class="alert alert-primary d-none align-items-center justify-content-between py-2 px-3 mb-4 mx-auto" style="max-width: 820px;">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-info-circle-fill fs-5"></i>
+            <span id="skillInfoText">Click a skill badge to view practical experience details.</span>
+          </div>
+          <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('skillInfoBanner').classList.add('d-none')"></button>
+        </div>
+
+        <div class="row g-4" id="skillGrid">
+          <!-- Programming -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card tilt-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="bi bi-terminal-fill fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Programming</h5>
               </div>
-              <small class="text-secondary">Core programming structures, loops, functions, and data operations.</small>
+              <p class="small text-body-secondary mb-3">Core languages and algorithmic fundamentals.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill" data-name="Python" data-detail="Certified via Great Learning; practiced scripts, data structures, and algorithmic logic."><i class="bi bi-filetype-py text-info"></i> Python</span>
+                <span class="skill-pill" data-name="C" data-detail="Undergraduate coursework in structured programming, pointer arithmetic, and system memory models."><i class="bi bi-c-circle text-primary"></i> C</span>
+                <span class="skill-pill" data-name="C++" data-detail="Object-oriented programming, class architectures, operator overloading, and algorithmic STL usage."><i class="bi bi-code-slash text-success"></i> C++</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Web Technologies -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card tilt-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-info bg-opacity-10 text-info">
+                  <i class="bi bi-window-fullscreen fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Web Tech</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Frontend markup, responsive design, and DOM manipulation.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill" data-name="HTML5" data-detail="Semantic HTML5 layouts across Healthcare Web App homepage and tournament discovery platform."><i class="bi bi-filetype-html text-danger"></i> HTML5</span>
+                <span class="skill-pill" data-name="CSS3" data-detail="Flexbox, CSS Grid, keyframe animations, glassmorphism, and responsive layout styling."><i class="bi bi-filetype-css text-primary"></i> CSS3</span>
+                <span class="skill-pill" data-name="JavaScript" data-detail="Vanilla JS ES6+, event-driven DOM scripting, filtering systems, and state simulation."><i class="bi bi-filetype-js text-warning"></i> JavaScript</span>
+                <span class="skill-pill" data-name="Bootstrap 5" data-detail="Responsive grid layouts, utility classes, themes, modals, and accessible interactive widgets."><i class="bi bi-bootstrap text-purple" style="color: #7952b3;"></i> Bootstrap 5</span>
+                <span class="skill-pill" data-name="Responsive Design" data-detail="Mobile-first responsive architecture tested across all viewport dimensions."><i class="bi bi-phone text-success"></i> Responsive Design</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Database & Core CS -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card tilt-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-warning bg-opacity-10 text-warning">
+                  <i class="bi bi-database-gear fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Core CS & DB</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Relational querying and foundational computer science.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill" data-name="SQL" data-detail="Relational database schemas, joins, queries, and table relationships for health records."><i class="bi bi-database text-success"></i> SQL</span>
+                <span class="skill-pill" data-name="Data Structures" data-detail="Arrays, linked lists, stacks, queues, trees, and search/sort algorithm complexity."><i class="bi bi-diagram-3 text-info"></i> Data Structures</span>
+                <span class="skill-pill" data-name="OOP" data-detail="Object-oriented design patterns, encapsulation, polymorphism, and modular abstraction."><i class="bi bi-shield-check text-warning"></i> OOP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tools & Additional Exposure -->
+          <div class="col-md-6 col-lg-3">
+            <div class="glass-card tilt-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="p-2 rounded-3 bg-success bg-opacity-10 text-success">
+                  <i class="bi bi-boxes fs-4"></i>
+                </div>
+                <h5 class="fw-bold mb-0">Tools & Exposure</h5>
+              </div>
+              <p class="small text-body-secondary mb-3">Version control, developer tools, and framework exposure.</p>
+              <div class="d-flex flex-wrap gap-2 mt-auto">
+                <span class="skill-pill" data-name="Git" data-detail="Version control, branching, committing, and team sync."><i class="bi bi-git text-danger"></i> Git</span>
+                <span class="skill-pill" data-name="GitHub" data-detail="Repository hosting, branch management, and collaborative development."><i class="bi bi-github"></i> GitHub</span>
+                <span class="skill-pill" data-name="VS Code" data-detail="Daily primary IDE configured with debugging extensions and workspace presets."><i class="bi bi-terminal"></i> VS Code</span>
+                <span class="skill-pill" data-name="React" data-detail="Component lifecycle, JSX syntax, state hooks, and component hierarchy."><i class="bi bi-atom text-info"></i> React</span>
+                <span class="skill-pill" data-name="Node.js" data-detail="Runtime environment exposure and backend package management via npm."><i class="bi bi-node-plus text-success"></i> Node.js</span>
+                <span class="skill-pill" data-name="Express.js" data-detail="Lightweight web framework structure for building RESTful service architectures."><i class="bi bi-diagram-2 text-primary"></i> Express.js</span>
+                <span class="skill-pill" data-name="UI/UX" data-detail="Wireframing user-centered interfaces and prototyping layouts in Canva."><i class="bi bi-palette text-warning"></i> UI/UX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-4">
+          <span class="text-primary font-mono small fw-bold">// PRACTICAL BUILDS</span>
+          <h2 class="display-6 fw-bold mt-1">Featured Projects & Demos</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Team-based engineering and innovation projects with live interactive simulators built-in.</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Project 1: Healthcare Consultation & Health Management -->
+          <div class="col-lg-6">
+            <div class="glass-card tilt-card h-100 d-flex flex-column overflow-hidden">
+              <div class="p-4 border-bottom border-secondary border-opacity-10 bg-primary bg-opacity-10 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-heart-pulse-fill text-danger fs-4"></i>
+                  <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">Team Project • 8 Members</span>
+                </div>
+                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Presentation Delivered</span>
+              </div>
+              <div class="p-4 d-flex flex-column flex-grow-1">
+                <h4 class="h5 fw-bold mb-2">Healthcare Consultation & Health Management Web App</h4>
+                <p class="text-body-secondary small flex-grow-1">
+                  Contributed to frontend development of a healthcare-focused web application including homepage architecture, doctor consultation booking, medication scheduling, and health metrics tracking. Formulated the concept of an NFC-based emergency card for rapid medical data access. Prepared and presented the complete project to evaluators.
+                </p>
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                  <span class="badge bg-secondary bg-opacity-25 text-body">HTML5</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">CSS3</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">JavaScript</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Bootstrap 5</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">SQL</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">NFC Concept</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-primary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1" data-bs-toggle="modal" data-bs-target="#healthDemoModal">
+                    <i class="bi bi-play-circle-fill"></i> Play Interactive Demo
+                  </button>
+                  <a href="https://github.com/MaharudrasinhRathore" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-github"></i> GitHub Repo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Sports Tournament Discovery Platform -->
+          <div class="col-lg-6">
+            <div class="glass-card tilt-card h-100 d-flex flex-column overflow-hidden">
+              <div class="p-4 border-bottom border-secondary border-opacity-10 bg-info bg-opacity-10 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-trophy-fill text-warning fs-4"></i>
+                  <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25">Innovation Village Project</span>
+                </div>
+                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">Hackathon Initiative</span>
+              </div>
+              <div class="p-4 d-flex flex-column flex-grow-1">
+                <h4 class="h5 fw-bold mb-2">Sports Tournament Discovery Platform</h4>
+                <p class="text-body-secondary small flex-grow-1">
+                  Engineered concept and interface prototype to help athletic players discover other players and find open competitive tournaments available for participation. Researched user journeys, organized project documentation, and communicated functionality to innovation mentors.
+                </p>
+                <div class="d-flex flex-wrap gap-1 mb-4">
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Web Architecture</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">UI Prototyping</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Bootstrap 5</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Vanilla JS</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-body">Team Research</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-success w-50 rounded-pill d-flex align-items-center justify-content-center gap-1" data-bs-toggle="modal" data-bs-target="#sportsDemoModal">
+                    <i class="bi bi-play-circle-fill"></i> Play Match Simulator
+                  </button>
+                  <a href="https://github.com/MaharudrasinhRathore" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary w-50 rounded-pill d-flex align-items-center justify-content-center gap-1">
+                    <i class="bi bi-github"></i> GitHub Repo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="py-5 bg-body-tertiary bg-opacity-50">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="text-primary font-mono small fw-bold">// ACADEMIC TIMELINE</span>
+          <h2 class="display-6 fw-bold mt-1">Education & Certifications</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Formal degrees, verified milestones, and collegiate credentials.</p>
+        </div>
+
+        <div class="row g-5">
+          <!-- Left Column: Degrees Timeline -->
+          <div class="col-lg-6">
+            <h4 class="fw-bold mb-4 d-flex align-items-center gap-2">
+              <i class="bi bi-mortarboard-fill text-primary"></i> Formal Academic Degrees
+            </h4>
+            <div class="timeline">
+              <!-- Item 1: B.Tech -->
+              <div class="timeline-item">
+                <div class="glass-card tilt-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">Bachelor of Technology (B.Tech)</h5>
+                    <span class="badge bg-primary bg-opacity-25 text-primary">2022 – Present</span>
+                  </div>
+                  <div class="text-primary fw-semibold small mb-1">Computer Science & Engineering</div>
+                  <div class="text-body-secondary small mb-2">Indus Institute of Technology and Engineering (IITE)</div>
+                  <p class="text-body-secondary small mb-2">
+                    Currently Pursuing • 3rd Year, 5th Semester. Active coursework in Data Structures, Relational Databases, and Modern Web Systems.
+                  </p>
+                  <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 font-mono">
+                    4th Semester SGPA: 7.56
+                  </span>
+                </div>
+              </div>
+
+              <!-- Item 2: Diploma -->
+              <div class="timeline-item">
+                <div class="glass-card tilt-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">Diploma in Information Technology</h5>
+                    <span class="badge bg-secondary bg-opacity-25 text-body">2019 – 2022</span>
+                  </div>
+                  <div class="text-body-secondary fw-semibold small mb-1">Completed</div>
+                  <p class="text-body-secondary small mb-2">
+                    Three-year engineering diploma providing foundational training in computer architecture, C programming, IT networks, and web engineering.
+                  </p>
+                  <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 font-mono">
+                    Completed • CGPA: 6.52
+                  </span>
+                </div>
+              </div>
+
+              <!-- Item 3: 10th -->
+              <div class="timeline-item">
+                <div class="glass-card tilt-card p-4">
+                  <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold mb-0">Secondary Education (10th)</h5>
+                    <span class="badge bg-secondary bg-opacity-25 text-body">Completed 2019</span>
+                  </div>
+                  <p class="text-body-secondary small mb-2">Completed high school board examinations with core focus on mathematics and science foundations.</p>
+                  <span class="badge bg-secondary bg-opacity-25 text-body font-mono">Percentage: 65%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Certifications & Extracurriculars -->
+          <div class="col-lg-6">
+            <h4 class="fw-bold mb-4 d-flex align-items-center gap-2">
+              <i class="bi bi-award-fill text-warning"></i> Certifications & Extracurriculars
+            </h4>
+
+            <div class="d-flex flex-column gap-3 mb-4">
+              <div class="glass-card tilt-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold">Python for Beginners</span>
+                  <span class="badge bg-primary bg-opacity-25 text-primary">Great Learning</span>
+                </div>
+                <small class="text-body-secondary">Hands-on coding, algorithmic logic, control flows, and functional scripts.</small>
+              </div>
+
+              <div class="glass-card tilt-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold">Developing Interpersonal Skills</span>
+                  <span class="badge bg-info bg-opacity-25 text-info">IBM</span>
+                </div>
+                <small class="text-body-secondary">Professional collaboration, engineering communications, and active teamwork.</small>
+              </div>
+
+              <div class="glass-card tilt-card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold">1-Day Microsoft Office Using AI Tools</span>
+                  <span class="badge bg-warning bg-opacity-25 text-warning">BE10X</span>
+                </div>
+                <small class="text-body-secondary">AI-assisted productivity, structured documentation, and workflow automation.</small>
+              </div>
             </div>
 
-            <div class="interactive-card p-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">Developing Interpersonal Skills</span>
-                <span class="badge bg-primary-subtle text-primary">IBM</span>
+            <!-- Soft Skills & Highlights -->
+            <div class="glass-card tilt-card p-4">
+              <h6 class="fw-bold text-primary mb-3"><i class="bi bi-stars me-2"></i>Soft Skills & Collegiate Engagement</h6>
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge bg-body-secondary text-body">Teamwork</span>
+                <span class="badge bg-body-secondary text-body">Communication</span>
+                <span class="badge bg-body-secondary text-body">Presentation</span>
+                <span class="badge bg-body-secondary text-body">Problem Solving</span>
+                <span class="badge bg-body-secondary text-body">Information Organization</span>
+                <span class="badge bg-body-secondary text-body">Collaboration</span>
               </div>
-              <small class="text-secondary">Collaborative problem solving, presentation mastery, and team dynamics.</small>
-            </div>
-
-            <div class="interactive-card p-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">1-Day Microsoft Office Using AI Tools</span>
-                <span class="badge bg-primary-subtle text-primary">BE10X</span>
-              </div>
-              <small class="text-secondary">Automated workflows, AI-assisted productivity, and technical documentation.</small>
-            </div>
-
-            <div class="interactive-card p-3 border-primary-subtle">
-              <h6 class="fw-bold text-primary mb-2"><i class="bi bi-star me-2"></i>Extracurricular & Co-curricular</h6>
-              <ul class="text-secondary small ps-3 mb-0">
-                <li>Participated in in-college Innovation Village / hackathon-style activities.</li>
-                <li>Participated in college presentations and technical quizzes.</li>
-                <li>Active participant in sports and cultural activities.</li>
+              <ul class="text-body-secondary small ps-3 mb-0 d-flex flex-column gap-1">
+                <li>Participated in an in-college Innovation Village / hackathon-style activity.</li>
+                <li>Participated in collegiate presentations, technical quizzes, sports, and cultural events.</li>
+                <li>Experienced in structuring project presentations and explaining technical workflows to mentors.</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="py-5 border-top border-secondary-subtle">
-    <div class="container py-4">
-      <div class="text-center mb-5">
-        <h2 class="display-6 fw-bold">Contact MAHARUDRASINH</h2>
-        <p class="text-secondary">Open to internship inquiries, collaboration, and feedback.</p>
-      </div>
+    <section id="contact" class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5">
+          <span class="text-primary font-mono small fw-bold">// CONNECT DIRECT</span>
+          <h2 class="display-6 fw-bold mt-1">Contact MAHARUDRASINH</h2>
+          <div class="mx-auto bg-primary rounded" style="width: 45px; height: 3px;"></div>
+          <p class="text-body-secondary mt-3">Open for internship opportunities, technical collaborations, and academic reviews.</p>
+        </div>
 
-      <div class="row g-4 justify-content-center">
-        <!-- Direct Contact Cards with Copy Helpers -->
-        <div class="col-lg-5">
-          <div class="interactive-card p-4 h-100">
-            <h5 class="fw-bold mb-4">Contact Information</h5>
-
-            <!-- Email Card -->
-            <div class="d-flex align-items-center justify-content-between mb-4 p-2 rounded-3 bg-body-tertiary">
-              <div class="d-flex align-items-center gap-3 min-w-0">
-                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 flex-shrink-0">
-                  <i class="bi bi-envelope-at fs-5"></i>
-                </div>
-                <div class="min-w-0 overflow-hidden">
-                  <small class="text-secondary d-block">Email</small>
-                  <a href="mailto:maharudrasinhrathore@gmail.com" class="fw-semibold text-decoration-none text-body text-break" style="font-size: 0.9rem;">
-                    maharudrasinhrathore@gmail.com
-                  </a>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-link text-secondary" onclick="copyToClipboard('maharudrasinhrathore@gmail.com', 'Email copied!')" title="Copy Email">
-                <i class="bi bi-clipboard"></i>
-              </button>
-            </div>
-
-            <!-- Phone Card -->
-            <div class="d-flex align-items-center justify-content-between mb-4 p-2 rounded-3 bg-body-tertiary">
-              <div class="d-flex align-items-center gap-3">
-                <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 flex-shrink-0">
-                  <i class="bi bi-telephone fs-5"></i>
-                </div>
-                <div>
-                  <small class="text-secondary d-block">Phone</small>
-                  <a href="tel:+918200082364" class="fw-semibold text-decoration-none text-body">
-                    +91 82000 82364
-                  </a>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-link text-secondary" onclick="copyToClipboard('+918200082364', 'Phone copied!')" title="Copy Phone">
-                <i class="bi bi-clipboard"></i>
-              </button>
-            </div>
-
-            <!-- GitHub Card -->
-            <div class="d-flex align-items-center gap-3 mb-4 p-2 rounded-3 bg-body-tertiary">
-              <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 flex-shrink-0">
-                <i class="bi bi-github fs-5"></i>
-              </div>
-              <div class="min-w-0 overflow-hidden">
-                <small class="text-secondary d-block">GitHub</small>
-                <a href="https://github.com/MaharudrasinhRathore" target="_blank" class="fw-semibold text-decoration-none text-body text-break" style="font-size: clamp(0.78rem, 1.15vw, 0.875rem);">
-                  github.com/MaharudrasinhRathore
-                </a>
-              </div>
-            </div>
-
-            <!-- Location Card -->
-            <div class="d-flex align-items-center gap-3 p-2 rounded-3 bg-body-tertiary">
-              <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-2 flex-shrink-0">
-                <i class="bi bi-geo-alt fs-5"></i>
-              </div>
+        <div class="row g-4 align-items-stretch">
+          <!-- Direct Contact Cards -->
+          <div class="col-lg-5">
+            <div class="glass-card tilt-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
               <div>
-                <small class="text-secondary d-block">Location</small>
-                <span class="fw-semibold">Ahmedabad, Gujarat, India</span>
+                <h4 class="h5 fw-bold mb-4">Contact Information</h4>
+                
+                <div class="d-flex flex-column gap-4">
+                  <!-- Email with Copy Button -->
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3 min-w-0">
+                      <div class="p-3 rounded-circle bg-primary bg-opacity-10 text-primary flex-shrink-0">
+                        <i class="bi bi-envelope-at fs-5"></i>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="text-body-secondary small">Email Address</div>
+                        <a href="mailto:maharudrasinhrathore@gmail.com" class="fw-semibold text-decoration-none text-body text-break" style="font-size: 0.95rem;">
+                          maharudrasinhrathore@gmail.com
+                        </a>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle ms-2" title="Copy Email" onclick="copyToClipboard('maharudrasinhrathore@gmail.com', 'Email copied to clipboard!')">
+                      <i class="bi bi-copy"></i>
+                    </button>
+                  </div>
+
+                  <!-- Phone with Copy Button -->
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="p-3 rounded-circle bg-success bg-opacity-10 text-success flex-shrink-0">
+                        <i class="bi bi-telephone fs-5"></i>
+                      </div>
+                      <div>
+                        <div class="text-body-secondary small">Phone Number</div>
+                        <a href="tel:+918200082364" class="fw-semibold text-decoration-none text-body">
+                          +91 82000 82364
+                        </a>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle ms-2" title="Copy Phone" onclick="copyToClipboard('+918200082364', 'Phone number copied!')">
+                      <i class="bi bi-copy"></i>
+                    </button>
+                  </div>
+
+                  <!-- GitHub -->
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="p-3 rounded-circle bg-warning bg-opacity-10 text-warning flex-shrink-0">
+                      <i class="bi bi-github fs-5"></i>
+                    </div>
+                    <div class="min-w-0 overflow-hidden">
+                      <div class="text-body-secondary small">GitHub Profile</div>
+                      <a href="https://github.com/MaharudrasinhRathore" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none text-body text-break" style="font-size: clamp(0.78rem, 1.15vw, 0.875rem);">
+                        github.com/MaharudrasinhRathore
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Location -->
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="p-3 rounded-circle bg-info bg-opacity-10 text-info flex-shrink-0">
+                      <i class="bi bi-geo-alt fs-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-body-secondary small">Current Location</div>
+                      <div class="fw-semibold">Ahmedabad, Gujarat, India</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-4 border-top border-secondary border-opacity-25">
+                <span class="small text-body-secondary d-flex align-items-center gap-2">
+                  <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+                  Active response window: Typically within 24 hours.
+                </span>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Interactive Contact Form -->
-        <div class="col-lg-7">
-          <div class="interactive-card p-4">
-            <h5 class="fw-bold mb-4">Send a Direct Message</h5>
-            <form id="contactForm" novalidate>
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">Your Name</label>
-                  <input type="text" class="form-control" id="contactName" placeholder="e.g. Evaluator / Recruiter" required>
-                  <div class="invalid-feedback">Please enter your name.</div>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label small fw-semibold">Your Email</label>
-                  <input type="email" class="form-control" id="contactEmail" placeholder="e.g. team@company.com" required>
-                  <div class="invalid-feedback">Please enter a valid email address.</div>
-                </div>
-                <div class="col-12">
-                  <label class="form-label small fw-semibold">Subject</label>
-                  <input type="text" class="form-control" id="contactSubject" placeholder="Internship Opportunity / Project Review" required>
-                  <div class="invalid-feedback">Please provide a subject.</div>
-                </div>
-                <div class="col-12">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <label class="form-label small fw-semibold mb-1">Message</label>
-                    <small class="text-secondary" id="charCounter">0 / 500</small>
+          <!-- Interactive Contact Form -->
+          <div class="col-lg-7">
+            <div class="glass-card tilt-card p-4 p-md-5 h-100">
+              <h4 class="h5 fw-bold mb-3">Send a Message</h4>
+              
+              <form id="portfolioContactForm" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="senderName" class="form-label small fw-semibold">Your Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control rounded-3" id="senderName" placeholder="e.g. Evaluator / Recruiter" required>
+                    <div class="invalid-feedback">Please provide your name.</div>
                   </div>
-                  <textarea class="form-control" id="contactMessage" rows="4" maxlength="500" placeholder="Type your message here..." required></textarea>
-                  <div class="invalid-feedback">Please enter a message.</div>
+
+                  <div class="col-md-6">
+                    <label for="senderEmail" class="form-label small fw-semibold">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control rounded-3" id="senderEmail" placeholder="name@domain.com" required>
+                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="messageSubject" class="form-label small fw-semibold">Subject <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control rounded-3" id="messageSubject" placeholder="Internship Opportunity / Academic Inquiry" required>
+                    <div class="invalid-feedback">Please enter a subject.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <label for="messageContent" class="form-label small fw-semibold">Message <span class="text-danger">*</span></label>
+                      <span id="charCount" class="font-mono small text-body-secondary">0 / 500</span>
+                    </div>
+                    <textarea class="form-control rounded-3" id="messageContent" rows="5" maxlength="500" placeholder="Write your message details..." required></textarea>
+                    <div class="invalid-feedback">Please enter your message.</div>
+                  </div>
+
+                  <div class="col-12 pt-2">
+                    <button type="submit" id="submitFormBtn" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold d-inline-flex align-items-center gap-2">
+                      <span id="btnText">Send Message</span>
+                      <i class="bi bi-send-fill"></i>
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary px-3 py-2 rounded-pill ms-2" onclick="document.getElementById('charCount').textContent='0 / 500'">Reset</button>
+                  </div>
                 </div>
-                <div class="col-12 mt-4">
-                  <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold">
-                    <i class="bi bi-send-fill me-2"></i>Send Message
-                  </button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Footer -->
-  <footer class="py-4 border-top border-secondary-subtle bg-body-tertiary">
+  <footer class="py-4 border-top border-secondary border-opacity-10 bg-body-tertiary">
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-      <div class="small text-secondary">
-        &copy; 2026 Maharudrasinh Karansinh Jetavat. All rights reserved.
+      <div class="text-center text-md-start">
+        <span class="font-mono fw-semibold text-primary">&lt;Maharudrasinh Karansinh Jetavat /&gt;</span>
+        <div class="small text-body-secondary mt-1">&copy; <span id="currentYear"></span> All rights reserved. B.Tech Computer Science & Engineering.</div>
       </div>
-      <div class="d-flex gap-3 small">
-        <a href="https://github.com/MaharudrasinhRathore" target="_blank" class="text-secondary text-decoration-none">
-          <i class="bi bi-github me-1"></i>GitHub
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="https://github.com/MaharudrasinhRathore" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="GitHub">
+          <i class="bi bi-github"></i>
         </a>
-        <a href="mailto:maharudrasinhrathore@gmail.com" class="text-secondary text-decoration-none">
-          <i class="bi bi-envelope me-1"></i>Email
+        <a href="mailto:maharudrasinhrathore@gmail.com" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Email">
+          <i class="bi bi-envelope-fill"></i>
         </a>
-        <button class="btn btn-link text-secondary text-decoration-none p-0 small" data-bs-toggle="modal" data-bs-target="#resumeModal">
-          <i class="bi bi-file-earmark-person me-1"></i>Resume
+        <button class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 font-mono small" data-bs-toggle="modal" data-bs-target="#cliTerminalModal">
+          <i class="bi bi-terminal me-1"></i>CLI
         </button>
       </div>
     </div>
   </footer>
 
-  <!-- ============================================== -->
-  <!-- FLOATING DEVELOPER CLI TERMINAL (INTERACTIVE) -->
-  <!-- ============================================== -->
-  <button class="btn btn-primary rounded-circle p-3 terminal-toggle-btn" id="cliToggleBtn" title="Developer Terminal">
-    <i class="bi bi-terminal-fill fs-5"></i>
-  </button>
-
-  <div class="cli-window" id="cliWindow">
-    <div class="bg-dark p-2 d-flex justify-content-between align-items-center border-bottom border-secondary">
-      <span class="font-mono text-light small"><i class="bi bi-terminal me-2 text-primary"></i>jetavat-terminal ~ bash</span>
-      <button class="btn-close btn-close-white btn-sm" id="cliCloseBtn"></button>
-    </div>
-    <div class="p-3 cli-output font-mono" id="cliOutput">
-      <div class="text-info">Type <span class="text-warning">'help'</span> to see available commands.</div>
-    </div>
-    <div class="p-2 border-top border-secondary bg-dark d-flex">
-      <span class="font-mono text-success small me-2">$</span>
-      <input type="text" id="cliInput" class="form-control form-control-sm bg-transparent border-0 text-light font-mono shadow-none p-0" placeholder="Type command..." autocomplete="off">
-    </div>
+  <!-- Floating Action Buttons -->
+  <div class="floating-tools">
+    <button id="cliFloatBtn" class="btn btn-primary floating-btn font-mono" title="Open Interactive Terminal" data-bs-toggle="modal" data-bs-target="#cliTerminalModal">
+      &gt;_
+    </button>
+    <button id="backToTopBtn" class="btn btn-secondary floating-btn" title="Back to Top" aria-label="Back to top">
+      <i class="bi bi-arrow-up"></i>
+    </button>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: HEALTHCARE APP INTERACTIVE DEMO         -->
-  <!-- ============================================== -->
-  <div class="modal fade" id="healthDemoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title fw-bold"><i class="bi bi-heart-pulse me-2"></i>Interactive Demo: Consultation & NFC Card</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-4">
-          <div class="row g-4">
-            <div class="col-md-6 border-end">
-              <h6 class="fw-bold mb-3">1. Doctor Appointment Booking</h6>
-              <div class="mb-2">
-                <label class="form-label small">Select Specialist:</label>
-                <select class="form-select form-select-sm" id="doctorSelect">
-                  <option>Dr. Patel (General Medicine)</option>
-                  <option>Dr. Shah (Cardiologist)</option>
-                  <option>Dr. Desai (Orthopedics)</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label small">Choose Time Slot:</label>
-                <div class="d-flex flex-wrap gap-2" id="slotPicker">
-                  <button class="btn btn-sm btn-outline-primary active slot-btn">10:00 AM</button>
-                  <button class="btn btn-sm btn-outline-primary slot-btn">02:30 PM</button>
-                  <button class="btn btn-sm btn-outline-primary slot-btn">05:15 PM</button>
-                </div>
-              </div>
-              <button class="btn btn-sm btn-primary w-100" id="bookSlotBtn">Confirm Mock Booking</button>
-              <div id="bookingConfirmation" class="small text-success mt-2 d-none"></div>
-            </div>
-
-            <div class="col-md-6">
-              <h6 class="fw-bold mb-3">2. NFC Emergency Health Card</h6>
-              <div class="p-3 rounded-3 text-white" style="background: linear-gradient(135deg, #1e3a5f, #0f172a);">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <i class="bi bi-broadcast fs-4 text-warning"></i>
-                  <span class="badge bg-danger">NFC MEDICAL ID</span>
-                </div>
-                <h6 class="mb-1 text-light fw-bold">Emergency Profile Card</h6>
-                <div class="small text-white-50">Cardholder: Maharudrasinh Jetavat</div>
-                <div class="small text-white-50 mt-2">Emergency Contact: +91 82000 82364</div>
-                <button class="btn btn-sm btn-outline-light rounded-pill mt-3 w-100" id="simulateNfcTap">
-                  <i class="bi bi-phone me-1"></i>Simulate NFC Scan
-                </button>
-              </div>
-              <div id="nfcDetailsBox" class="p-2 border rounded-3 mt-2 small bg-body-tertiary d-none">
-                <strong>[NFC Tap Verified]</strong> Immediate medical details, blood group, allergies, and contact relayed.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- MODAL: SPORTS TOURNAMENT INTERACTIVE DEMO      -->
-  <!-- ============================================== -->
-  <div class="modal fade" id="sportsDemoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title fw-bold"><i class="bi bi-trophy me-2"></i>Sports Tournament Match Finder</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-4">
-          <label class="form-label small fw-semibold">Select Sport Category:</label>
-          <div class="input-group mb-3">
-            <select class="form-select form-select-sm" id="sportFilter">
-              <option value="Cricket">Cricket (T20 League)</option>
-              <option value="Football">Football (Inter-College Cup)</option>
-              <option value="Badminton">Badminton (Open Championship)</option>
-            </select>
-            <button class="btn btn-sm btn-success" id="generateMatchBtn">Find Open Tournaments</button>
-          </div>
-          <div class="p-3 border rounded-3 bg-body-tertiary" id="sportsResultsBox">
-            <div class="small text-secondary">Click the button above to load live event listings...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- MODAL: OFFICIAL TWO-COLUMN RESUME              -->
-  <!-- ============================================== -->
-  <div class="modal fade" id="resumeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content border-0 shadow-lg">
         <div class="modal-header bg-dark text-white border-bottom border-secondary">
           <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-file-earmark-person-fill text-primary fs-5"></i>
-            <h5 class="modal-title fw-bold">Maharudrasinh K Jetavat — Official Resume</h5>
+            <i class="bi bi-file-earmark-text-fill text-primary fs-5"></i>
+            <h5 class="modal-title fw-bold" id="resumeModalLabel">Maharudrasinh K Jetavat — Official Resume</h5>
           </div>
           <div class="d-flex align-items-center gap-2">
             <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="window.print()">
               <i class="bi bi-printer me-1"></i>Print / Save as PDF
             </button>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
         </div>
 
         <div class="modal-body p-2 p-md-4 bg-secondary bg-opacity-10">
+          <!-- Two Column Document Sheet -->
           <div class="resume-sheet rounded-3 p-4 p-md-5 mx-auto" style="max-width: 900px;">
             <div class="navy-corner"></div>
 
-            <!-- Resume Header -->
+            <!-- Header -->
             <div class="mb-4">
               <h1 class="fw-bold tracking-tight mb-1" style="font-size: 2.1rem; color: #0e2a47;">
                 MAHARUDRASINH K JETAVAT
               </h1>
-              <h5 class="fw-semibold text-secondary mb-3">
+              <h5 class="fw-semibold text-secondary mb-3" style="color: #334155;">
                 B.Tech Computer Science & Engineering Student
               </h5>
+
               <div class="d-flex flex-wrap align-items-center gap-2 gap-md-4 text-secondary small pt-1 border-top border-light-subtle">
                 <span class="d-flex align-items-center gap-2 text-dark">
                   <i class="bi bi-telephone-fill text-primary"></i>+91 82000 82364
@@ -909,47 +1132,72 @@
               </div>
             </div>
 
-            <!-- Two Columns -->
+            <!-- Two-Column Grid Body -->
             <div class="row g-4 mt-1">
               <!-- Left Column -->
               <div class="col-md-5 d-flex flex-column gap-4 border-end-md pe-md-4" style="border-color: #cbd5e1 !important;">
+                
+                <!-- Professional Summary -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-person-fill text-primary"></i>Professional Summary
+                    <i class="bi bi-person-fill text-primary fs-5"></i>Professional Summary
                   </div>
                   <p class="text-secondary small leading-relaxed mb-0" style="text-align: justify;">
                     Third-year B.Tech Computer Science & Engineering student with a Diploma in Information Technology and foundational knowledge of programming, web development, databases, and core computer science concepts. Hands-on exposure to healthcare and sports-oriented web application projects through team-based development and innovation activities. Experienced in project presentations, research, information organization, and collaborative work. Interested in exploring opportunities in frontend development, software, digital technology, and fintech while continuing to develop technical skills.
                   </p>
                 </div>
 
+                <!-- Technical Skills -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-gear-wide-connected text-primary"></i>Technical Skills
+                    <i class="bi bi-gear-wide-connected text-primary fs-5"></i>Technical Skills
                   </div>
-                  <div class="small">
-                    <div class="mb-1"><strong>Programming:</strong> Python, C, C++</div>
-                    <div class="mb-1"><strong>Web Tech:</strong> HTML5, CSS3, JavaScript, Bootstrap 5, Responsive Design</div>
-                    <div class="mb-1"><strong>Database:</strong> SQL</div>
-                    <div class="mb-1"><strong>Core CS:</strong> Data Structures, OOP</div>
-                    <div class="mb-1"><strong>Tools:</strong> Git, GitHub, VS Code, Microsoft Office, Canva</div>
-                    <div><strong>Exposure:</strong> React, Node.js, Express.js, UI/UX</div>
-                  </div>
+                  <table class="table table-borderless resume-skill-table mb-0">
+                    <tbody>
+                      <tr>
+                        <td width="38%"><span class="resume-skill-label">Programming</span></td>
+                        <td>Python, C, C++</td>
+                      </tr>
+                      <tr>
+                        <td><span class="resume-skill-label">Web Tech</span></td>
+                        <td>HTML5, CSS3, JavaScript, Bootstrap 5, Responsive Web Design</td>
+                      </tr>
+                      <tr>
+                        <td><span class="resume-skill-label">Database</span></td>
+                        <td>SQL</td>
+                      </tr>
+                      <tr>
+                        <td><span class="resume-skill-label">Core CS</span></td>
+                        <td>Data Structures, Object-Oriented Programming</td>
+                      </tr>
+                      <tr>
+                        <td><span class="resume-skill-label">Tools</span></td>
+                        <td>Git, GitHub, VS Code, Microsoft Office, Canva</td>
+                      </tr>
+                      <tr>
+                        <td><span class="resume-skill-label">Additional Exposure</span></td>
+                        <td>React, Node.js, Express.js, UI/UX</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
 
+                <!-- Certifications -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-patch-check-fill text-primary"></i>Certifications
+                    <i class="bi bi-patch-check-fill text-primary fs-5"></i>Certifications
                   </div>
-                  <ul class="text-secondary small ps-3 mb-0 d-flex flex-column gap-1">
+                  <ul class="text-secondary small ps-3 mb-0 d-flex flex-column gap-2">
                     <li><strong>Python for Beginners</strong> — Great Learning</li>
                     <li><strong>Developing Interpersonal Skills</strong> — IBM</li>
                     <li><strong>1-Day Microsoft Office Using AI Tools</strong> — BE10X</li>
                   </ul>
                 </div>
 
+                <!-- Soft Skills -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-people-fill text-primary"></i>Soft Skills
+                    <i class="bi bi-people-fill text-primary fs-5"></i>Soft Skills
                   </div>
                   <div class="d-flex flex-wrap gap-1">
                     <span class="resume-badge">Teamwork</span>
@@ -962,98 +1210,280 @@
                     <span class="resume-badge">Collaboration</span>
                   </div>
                 </div>
+
               </div>
 
               <!-- Right Column -->
               <div class="col-md-7 d-flex flex-column gap-4 ps-md-3">
+                
+                <!-- Education -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-mortarboard-fill text-primary"></i>Education
+                    <i class="bi bi-mortarboard-fill text-primary fs-5"></i>Education
                   </div>
+                  
                   <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                      <strong class="text-dark">Bachelor of Technology (B.Tech)</strong>
-                      <span class="small text-secondary">2022 – Present</span>
+                    <div class="d-flex justify-content-between align-items-start">
+                      <h6 class="fw-bold mb-0 text-dark">Bachelor of Technology (B.Tech)</h6>
+                      <span class="small text-secondary fw-semibold">2022 – Present</span>
                     </div>
-                    <div class="small text-primary">Computer Science & Engineering</div>
+                    <div class="small text-primary fw-medium">Computer Science & Engineering</div>
                     <div class="small text-secondary">Currently Pursuing | 3rd Year, 5th Semester</div>
-                    <div class="small fw-bold text-dark">4th Semester SGPA: 7.56</div>
+                    <div class="small fw-semibold text-dark">4th Semester SGPA: 7.56</div>
                   </div>
 
                   <div class="mb-3">
-                    <div class="d-flex justify-content-between">
-                      <strong class="text-dark">Diploma in Information Technology</strong>
-                      <span class="small text-secondary">2019 – 2022</span>
+                    <div class="d-flex justify-content-between align-items-start">
+                      <h6 class="fw-bold mb-0 text-dark">Diploma in Information Technology</h6>
+                      <span class="small text-secondary fw-semibold">2019 – 2022</span>
                     </div>
                     <div class="small text-secondary">Completed</div>
-                    <div class="small fw-bold text-dark">CGPA: 6.52</div>
+                    <div class="small fw-semibold text-dark">CGPA: 6.52</div>
                   </div>
 
                   <div>
-                    <div class="d-flex justify-content-between">
-                      <strong class="text-dark">Secondary Education (10th)</strong>
-                      <span class="small text-secondary">2019</span>
+                    <div class="d-flex justify-content-between align-items-start">
+                      <h6 class="fw-bold mb-0 text-dark">Secondary Education (10th)</h6>
+                      <span class="small text-secondary fw-semibold">2019</span>
                     </div>
-                    <div class="small fw-bold text-dark">Percentage: 65%</div>
+                    <div class="small fw-semibold text-dark">Percentage: 65%</div>
                   </div>
                 </div>
 
+                <!-- Projects -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-code-square text-primary"></i>Projects
+                    <i class="bi bi-code-square text-primary fs-5"></i>Projects
                   </div>
+
+                  <!-- Project 1 -->
                   <div class="mb-3">
-                    <strong class="text-dark d-block">Healthcare Consultation & Health Management Web App</strong>
+                    <h6 class="fw-bold mb-0 text-dark">Healthcare Consultation & Health Management Web Application</h6>
                     <div class="small text-primary fw-semibold mb-1">Team Project | 8 Members</div>
                     <ul class="text-secondary small ps-3 mb-0 d-flex flex-column gap-1">
-                      <li>Contributed to frontend development of a healthcare-focused app including homepage.</li>
-                      <li>Developed doctor consultation, booking, scheduling, and health tracking features.</li>
-                      <li>Contributed to NFC-based emergency card concept.</li>
-                      <li>Prepared and delivered the presentation to mentors and evaluators.</li>
+                      <li>Contributed to the frontend development of a healthcare-focused web application, including the homepage.</li>
+                      <li>Worked as part of an 8-member team developing features for doctor consultation, appointment booking, medication scheduling, and health tracking.</li>
+                      <li>Contributed to the concept of an NFC-based emergency information card for providing emergency contact information.</li>
+                      <li>Prepared and delivered the complete project presentation and explained the application's features and concept to mentors/evaluators.</li>
                     </ul>
                   </div>
 
+                  <!-- Project 2 -->
                   <div>
-                    <strong class="text-dark d-block">Sports Tournament Discovery Platform</strong>
+                    <h6 class="fw-bold mb-0 text-dark">Sports Tournament Discovery Platform</h6>
                     <div class="small text-success fw-semibold mb-1">Innovation Village Project</div>
                     <ul class="text-secondary small ps-3 mb-0 d-flex flex-column gap-1">
-                      <li>Researched and presented a sports-oriented discovery platform concept.</li>
-                      <li>Helped players discover peers and tournaments for participation.</li>
+                      <li>Contributed to research and presentation for a sports-oriented web application concept.</li>
+                      <li>The platform was designed to help players discover other players and find tournaments available for participation.</li>
+                      <li>Helped organize and communicate the project concept and functionality during the innovation activity.</li>
                     </ul>
                   </div>
                 </div>
 
+                <!-- Activities & Experience -->
                 <div>
                   <div class="resume-section-title">
-                    <i class="bi bi-star-fill text-primary"></i>Activities & Experience
+                    <i class="bi bi-star-fill text-primary fs-5"></i>Activities & Experience
                   </div>
                   <ul class="text-secondary small ps-3 mb-0 d-flex flex-column gap-1">
-                    <li>Participated in in-college Innovation Village / hackathon activities.</li>
-                    <li>Participated in technical quizzes, sports, and cultural events.</li>
-                    <li>Experienced in preparing and delivering presentations to faculty mentors.</li>
+                    <li>Participated in an in-college Innovation Village / hackathon-style activity.</li>
+                    <li>Participated in college presentations and technical quizzes.</li>
+                    <li>Participated in sports and cultural activities.</li>
+                    <li>Worked on multiple team-based academic projects.</li>
+                    <li>Experienced in researching information, preparing presentations, and communicating project concepts to mentors.</li>
                   </ul>
                 </div>
+
               </div>
             </div>
+
           </div>
         </div>
 
         <div class="modal-footer bg-dark border-top border-secondary">
           <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary rounded-pill px-4" onclick="window.print()">
-            <i class="bi bi-printer me-1"></i>Print Resume
+            <i class="bi bi-printer me-1"></i>Print / Save PDF
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast Container -->
+  <!-- Healthcare Demo Modal -->
+  <div class="modal fade" id="healthDemoModal" tabindex="-1" aria-labelledby="healthDemoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content glass-card border border-primary border-opacity-25 shadow-lg">
+        <div class="modal-header border-bottom border-secondary border-opacity-25">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-heart-pulse text-danger fs-4"></i>
+            <h5 class="modal-title fw-bold" id="healthDemoModalLabel">Healthcare App: Live Interactive Prototype</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="small text-body-secondary mb-3">
+            Simulate the interactive appointment and NFC emergency card trigger engineered in Maharudrasinh's 8-member project.
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 bg-body-tertiary border border-secondary border-opacity-10 h-100">
+                <h6 class="fw-bold mb-3"><i class="bi bi-calendar-check text-primary me-2"></i>Book Consultation Slot</h6>
+                <div class="mb-2">
+                  <label class="form-label small">Select Specialist</label>
+                  <select id="docSelect" class="form-select form-select-sm">
+                    <option>Dr. Patel (General Physician)</option>
+                    <option>Dr. Sharma (Cardiologist)</option>
+                    <option>Dr. Mehta (Orthopedic)</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small">Choose Time Slot</label>
+                  <div class="d-flex flex-wrap gap-2" id="doctorTimeSlots">
+                    <button type="button" class="btn btn-sm btn-outline-primary slot-btn active" onclick="selectSlot(this)">10:00 AM</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary slot-btn" onclick="selectSlot(this)">02:30 PM</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary slot-btn" onclick="selectSlot(this)">06:00 PM</button>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-primary w-100 rounded-pill" onclick="simulateBooking()">Confirm Mock Appointment</button>
+                <div id="bookingConfirmation" class="alert alert-success py-2 small mt-2 d-none">
+                  <i class="bi bi-check-circle me-1"></i> Slot reserved with Dr. Patel for 10:00 AM!
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="p-3 rounded-3 bg-body-tertiary border border-secondary border-opacity-10 h-100">
+                <h6 class="fw-bold mb-2"><i class="bi bi-broadcast text-info me-2"></i>NFC Emergency Card Reader</h6>
+                <p class="small text-body-secondary mb-3">Tap below to test instant patient vital retrieval as conceived for emergency situations.</p>
+                
+                <button type="button" class="btn btn-sm btn-outline-info w-100 rounded-pill mb-3" onclick="simulateNfcTap()">
+                  <i class="bi bi-upc-scan me-1"></i> Simulate NFC Card Tap
+                </button>
+
+                <div id="nfcCardData" class="p-3 rounded-3 bg-dark text-light font-mono small d-none">
+                  <div class="text-warning fw-bold mb-1">// EMERGENCY VITAL CARD</div>
+                  <div>Cardholder: <span class="text-info">Maharudrasinh Jetavat</span></div>
+                  <div>Blood Group: <span class="text-info">O+ Positive</span></div>
+                  <div>Emergency Contact: <span class="text-success">+91 82000 82364</span></div>
+                  <div>Allergies: <span class="text-light">None reported</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary border-opacity-25">
+          <button type="button" class="btn btn-secondary rounded-pill btn-sm" data-bs-dismiss="modal">Close Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sports Tournament Demo Modal -->
+  <div class="modal fade" id="sportsDemoModal" tabindex="-1" aria-labelledby="sportsDemoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content glass-card border border-warning border-opacity-25 shadow-lg">
+        <div class="modal-header border-bottom border-secondary border-opacity-25">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-trophy-fill text-warning fs-4"></i>
+            <h5 class="modal-title fw-bold" id="sportsDemoModalLabel">Sports Discovery: Live Tournament Matcher</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="small text-body-secondary mb-3">
+            Filter tournaments by sport and test the dynamic team bracket matchmaking engine designed during Innovation Village.
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-5">
+              <label class="form-label small fw-semibold">Sport Discipline</label>
+              <select id="sportFilterSelect" class="form-select form-select-sm mb-3" onchange="filterTournaments()">
+                <option value="all">All Sports</option>
+                <option value="cricket">Cricket (T20)</option>
+                <option value="football">Football (7-a-side)</option>
+                <option value="badminton">Badminton (Doubles)</option>
+              </select>
+
+              <button class="btn btn-sm btn-outline-warning w-100 rounded-pill" onclick="generateRandomMatch()">
+                <i class="bi bi-shuffle me-1"></i> Quick Match Generator
+              </button>
+
+              <div id="quickMatchAlert" class="alert alert-info py-2 small mt-3 d-none">
+                <strong>Matched:</strong> Ahmedabad Titans vs Sabarmati Strikers
+              </div>
+            </div>
+
+            <div class="col-md-7">
+              <h6 class="small fw-bold text-body-secondary mb-2">Active Collegiate Tournaments</h6>
+              <div id="tournamentList" class="d-flex flex-column gap-2">
+                <div class="p-2 rounded bg-body-tertiary border d-flex justify-content-between align-items-center tournament-row" data-sport="cricket">
+                  <div>
+                    <div class="fw-bold small">Gujarat Inter-College Cricket Cup</div>
+                    <small class="text-body-secondary">Ahmedabad • 16 Teams Registered</small>
+                  </div>
+                  <span class="badge bg-success">Registration Open</span>
+                </div>
+                <div class="p-2 rounded bg-body-tertiary border d-flex justify-content-between align-items-center tournament-row" data-sport="football">
+                  <div>
+                    <div class="fw-bold small">Monsoon 7-a-side Football League</div>
+                    <small class="text-body-secondary">Gandhinagar • 8 Teams</small>
+                  </div>
+                  <span class="badge bg-warning text-dark">3 Slots Left</span>
+                </div>
+                <div class="p-2 rounded bg-body-tertiary border d-flex justify-content-between align-items-center tournament-row" data-sport="badminton">
+                  <div>
+                    <div class="fw-bold small">IITE Open Badminton Championship</div>
+                    <small class="text-body-secondary">Campus Arena • Knockouts</small>
+                  </div>
+                  <span class="badge bg-info">Upcoming</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary border-opacity-25">
+          <button type="button" class="btn btn-secondary rounded-pill btn-sm" data-bs-dismiss="modal">Close Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cliTerminalModal" tabindex="-1" aria-labelledby="cliTerminalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content shadow-lg border-0">
+        <div class="modal-header py-2 px-3 bg-dark border-bottom border-secondary d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <span class="rounded-circle bg-danger d-inline-block" style="width: 10px; height: 10px;"></span>
+            <span class="rounded-circle bg-warning d-inline-block" style="width: 10px; height: 10px;"></span>
+            <span class="rounded-circle bg-success d-inline-block" style="width: 10px; height: 10px;"></span>
+            <span class="font-mono small text-secondary ms-2">maharudrasinh@portfolio-cli: ~</span>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="terminal-body" id="terminalOutput">
+          <div class="text-secondary">Welcome to Maharudrasinh's Interactive Developer Terminal [v3.0.0]</div>
+          <div class="text-secondary mb-2">Type <span class="text-warning">help</span> to list available commands.</div>
+        </div>
+        <div class="terminal-input-wrapper">
+          <span class="text-success font-mono">➜</span>
+          <span class="text-info font-mono ms-2">~</span>
+          <input type="text" id="terminalInput" class="terminal-input" placeholder="Type a command (help, about, skills, projects, education, contact, resume, clear)..." autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Feedback Toast -->
   <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 1090;">
-    <div id="actionToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="actionToast" class="toast align-items-center text-bg-primary border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="d-flex">
-        <div class="toast-body" id="toastMessage">Action completed!</div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i id="toastIcon" class="bi bi-check-circle-fill fs-5"></i>
+          <span id="toastMessage">Success notification!</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     </div>
   </div>
@@ -1061,304 +1491,454 @@
   <!-- Bootstrap 5 Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Modern Interactive Vanilla JavaScript -->
   <script>
-    // 1. Dark/Light Theme Switching
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    /* -------------------------------------------------------------
+       1. Persistent Dark/Light Mode Theme Switcher
+       ------------------------------------------------------------- */
     const htmlElem = document.documentElement;
-    const themeBtn = document.getElementById('themeToggle');
+    const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
+
+    // Retrieve saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('theme-preference') || 'dark';
+    htmlElem.setAttribute('data-bs-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-moon-stars-fill text-warning';
+      } else {
+        themeIcon.className = 'bi bi-sun-fill text-warning';
+      }
+    }
 
     themeBtn.addEventListener('click', () => {
       const current = htmlElem.getAttribute('data-bs-theme');
       const target = current === 'dark' ? 'light' : 'dark';
       htmlElem.setAttribute('data-bs-theme', target);
-      if (target === 'dark') {
-        themeIcon.className = 'bi bi-moon-stars-fill me-1';
-        themeText.textContent = 'Dark';
-      } else {
-        themeIcon.className = 'bi bi-sun-fill me-1';
-        themeText.textContent = 'Light';
-      }
+      localStorage.setItem('theme-preference', target);
+      updateThemeIcon(target);
     });
 
-    // 2. Dynamic Typing Effect
-    const phrases = [
-      'Full-Stack Web Engineering',
+    /* -------------------------------------------------------------
+       2. Dynamic Text Typing Effect
+       ------------------------------------------------------------- */
+    const dynamicPhrases = [
+      'Full-Stack Web Development',
       'Data Structures & Algorithms',
-      'Healthcare & Sports Solutions',
-      'Clean UI/UX & Responsive Web'
+      'Interactive Healthcare & Sports Tech',
+      'Clean UI/UX & Responsive Systems'
     ];
-    let pIdx = 0, cIdx = 0, deleting = false;
-    const typeElem = document.getElementById('typingText');
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedTextEl = document.getElementById('typed-text');
 
-    function loopTyping() {
-      const current = phrases[pIdx];
-      if (deleting) {
-        typeElem.textContent = current.substring(0, cIdx - 1);
-        cIdx--;
+    function typeLoop() {
+      const current = dynamicPhrases[phraseIndex];
+      if (isDeleting) {
+        typedTextEl.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
       } else {
-        typeElem.textContent = current.substring(0, cIdx + 1);
-        cIdx++;
+        typedTextEl.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
       }
 
-      let speed = deleting ? 35 : 75;
-      if (!deleting && cIdx === current.length) {
-        speed = 1800;
-        deleting = true;
-      } else if (deleting && cIdx === 0) {
-        deleting = false;
-        pIdx = (pIdx + 1) % phrases.length;
+      let speed = isDeleting ? 35 : 75;
+
+      if (!isDeleting && charIndex === current.length) {
+        speed = 1700;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % dynamicPhrases.length;
         speed = 400;
       }
-      setTimeout(loopTyping, speed);
-    }
-    loopTyping();
 
-    // 3. Ambient Particle Constellation Canvas
-    const canvas = document.getElementById('particleCanvas');
+      setTimeout(typeLoop, speed);
+    }
+    typeLoop();
+
+    /* -------------------------------------------------------------
+       3. Interactive Particle Constellation Canvas
+       ------------------------------------------------------------- */
+    const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    const numParticles = 35;
+    let mouse = { x: null, y: null, radius: 130 };
 
     function resizeCanvas() {
-      canvas.width = canvas.parentElement.offsetWidth;
-      canvas.height = canvas.parentElement.offsetHeight;
+      const hero = document.getElementById('home');
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+      initParticles();
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.radius = 2;
+        this.size = Math.random() * 2.2 + 1;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.density = (Math.random() * 15) + 5;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = (Math.random() - 0.5) * 0.8;
       }
+
+      draw() {
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--canvas-particle-color').trim() || '#3b82f6';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(59, 130, 246, 0.4)';
-        ctx.fill();
+
+        if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
+        if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const directionX = (dx / distance) * force * this.density * 0.4;
+            const directionY = (dy / distance) * force * this.density * 0.4;
+            this.x -= directionX;
+            this.y -= directionY;
+          }
+        }
       }
     }
 
-    for (let i = 0; i < numParticles; i++) {
-      particles.push(new Particle());
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.floor((canvas.width * canvas.height) / 13000);
+      for (let i = 0; i < Math.min(particleCount, 80); i++) {
+        particles.push(new Particle());
+      }
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+    function connectParticles() {
+      const lineColor = getComputedStyle(document.documentElement).getPropertyValue('--canvas-line-color').trim() || 'rgba(59, 130, 246, 0.15)';
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 0.8;
+
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          const dist = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
           if (dist < 110) {
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 - dist / 110 * 0.15})`;
-            ctx.lineWidth = 1;
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
             ctx.stroke();
           }
         }
       }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      connectParticles();
       requestAnimationFrame(animateParticles);
     }
+
+    window.addEventListener('resize', resizeCanvas);
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    resizeCanvas();
     animateParticles();
 
-    // 4. Interactive 3D Perspective Tilt for Cards
-    document.querySelectorAll('.interactive-card').forEach(card => {
+    /* -------------------------------------------------------------
+       4. Real-time 3D Perspective Tilt on Cards
+       ------------------------------------------------------------- */
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    tiltCards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        const cx = rect.width / 2;
-        const cy = rect.height / 2;
-        const rotateX = ((y - cy) / cy) * -6;
-        const rotateY = ((x - cx) / cx) * 6;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
       });
+
       card.addEventListener('mouseleave', () => {
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
       });
     });
 
-    // 5. Skill Search Filter & Tooltips
-    const searchInput = document.getElementById('skillSearchInput');
-    const clearSearchBtn = document.getElementById('clearSkillSearch');
-    const skillTags = document.querySelectorAll('.skill-tag');
-    const detailBanner = document.getElementById('skillDetailBanner');
-    const detailText = document.getElementById('skillDetailText');
+    /* -------------------------------------------------------------
+       5. Interactive Skill Search & Detail Alerts
+       ------------------------------------------------------------- */
+    const skillSearchInput = document.getElementById('skillSearchInput');
+    const clearSkillBtn = document.getElementById('clearSkillBtn');
+    const skillPills = document.querySelectorAll('.skill-pill');
+    const skillInfoBanner = document.getElementById('skillInfoBanner');
+    const skillInfoText = document.getElementById('skillInfoText');
 
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      skillTags.forEach(tag => {
-        const match = tag.textContent.toLowerCase().includes(query);
-        tag.style.opacity = match ? '1' : '0.2';
+    skillSearchInput.addEventListener('input', (e) => {
+      const val = e.target.value.toLowerCase().trim();
+      skillPills.forEach(pill => {
+        const name = pill.getAttribute('data-name').toLowerCase();
+        if (name.includes(val) || val === '') {
+          pill.style.display = 'inline-flex';
+          pill.style.opacity = '1';
+        } else {
+          pill.style.display = 'none';
+        }
       });
     });
 
-    clearSearchBtn.addEventListener('click', () => {
-      searchInput.value = '';
-      skillTags.forEach(tag => tag.style.opacity = '1');
-    });
-
-    skillTags.forEach(tag => {
-      tag.addEventListener('click', () => {
-        detailText.textContent = tag.getAttribute('data-info');
-        detailBanner.classList.remove('d-none');
-        detailBanner.classList.add('d-flex');
+    clearSkillBtn.addEventListener('click', () => {
+      skillSearchInput.value = '';
+      skillPills.forEach(pill => {
+        pill.style.display = 'inline-flex';
+        pill.style.opacity = '1';
       });
     });
 
-    // 6. Project Demo Interactions
-    document.querySelectorAll('.slot-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    skillPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        skillPills.forEach(p => p.classList.remove('active-pill'));
+        pill.classList.add('active-pill');
+        const name = pill.getAttribute('data-name');
+        const detail = pill.getAttribute('data-detail');
+        skillInfoText.innerHTML = `<strong>${name}:</strong> ${detail}`;
+        skillInfoBanner.classList.remove('d-none');
+        skillInfoBanner.classList.add('d-flex');
       });
     });
 
-    document.getElementById('bookSlotBtn').addEventListener('click', () => {
-      const doc = document.getElementById('doctorSelect').value;
-      const activeSlot = document.querySelector('.slot-btn.active').textContent;
+    /* -------------------------------------------------------------
+       6. Project Demos: Healthcare & Sports Simulators
+       ------------------------------------------------------------- */
+    function selectSlot(btn) {
+      document.querySelectorAll('#doctorTimeSlots .slot-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function simulateBooking() {
+      const doc = document.getElementById('docSelect').value;
+      const activeSlot = document.querySelector('#doctorTimeSlots .slot-btn.active').textContent;
       const confirmBox = document.getElementById('bookingConfirmation');
-      confirmBox.textContent = `✓ Scheduled consultation with ${doc} at ${activeSlot}.`;
+      confirmBox.innerHTML = `<i class="bi bi-check-circle me-1"></i> Slot reserved with <strong>${doc}</strong> for <strong>${activeSlot}</strong>!`;
       confirmBox.classList.remove('d-none');
-    });
-
-    document.getElementById('simulateNfcTap').addEventListener('click', () => {
-      const nfcBox = document.getElementById('nfcDetailsBox');
-      nfcBox.classList.remove('d-none');
-      showToast('NFC Medical Card scanned successfully!');
-    });
-
-    document.getElementById('generateMatchBtn').addEventListener('click', () => {
-      const sport = document.getElementById('sportFilter').value;
-      const box = document.getElementById('sportsResultsBox');
-      box.innerHTML = `
-        <div class="fw-bold text-success mb-1"><i class="bi bi-check-circle me-1"></i>Found 2 Active Tournaments for ${sport}</div>
-        <div class="small text-body mb-1">1. Ahmedabad Inter-College Sprint (Starts Saturday)</div>
-        <div class="small text-body">2. State Champions Cup (Registration open)</div>
-      `;
-    });
-
-    // 7. Clipboard and Toast Helpers
-    function showToast(msg) {
-      const toastEl = document.getElementById('actionToast');
-      document.getElementById('toastMessage').textContent = msg;
-      const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
-      toast.show();
+      showToast('Mock appointment confirmed!');
     }
 
-    function copyToClipboard(text, successMsg) {
-      navigator.clipboard.writeText(text).then(() => {
-        showToast(successMsg);
-      }).catch(() => {
-        showToast('Copied to clipboard!');
+    function simulateNfcTap() {
+      const card = document.getElementById('nfcCardData');
+      card.classList.remove('d-none');
+      showToast('NFC Card Scanned: Emergency records retrieved!');
+    }
+
+    function filterTournaments() {
+      const selected = document.getElementById('sportFilterSelect').value;
+      const rows = document.querySelectorAll('.tournament-row');
+      rows.forEach(r => {
+        if (selected === 'all' || r.getAttribute('data-sport') === selected) {
+          r.style.display = 'flex';
+        } else {
+          r.style.display = 'none';
+        }
       });
     }
 
-    // 8. Contact Form Validation & Character Counter
-    const msgInput = document.getElementById('contactMessage');
-    const charCounter = document.getElementById('charCounter');
-    msgInput.addEventListener('input', () => {
-      charCounter.textContent = `${msgInput.value.length} / 500`;
+    function generateRandomMatch() {
+      const teams = [
+        'IITE Warriors vs Ahmedabad Titans',
+        'Sabarmati Strikers vs Gujarat Lions',
+        'Western Knights vs Royal Phoenix'
+      ];
+      const match = teams[Math.floor(Math.random() * teams.length)];
+      const alertBox = document.getElementById('quickMatchAlert');
+      alertBox.innerHTML = `<strong>Matched:</strong> ${match}`;
+      alertBox.classList.remove('d-none');
+      showToast('Tournament bracket pairing generated!');
+    }
+
+    /* -------------------------------------------------------------
+       7. Interactive Developer CLI Terminal Emulator
+       ------------------------------------------------------------- */
+    const terminalInput = document.getElementById('terminalInput');
+    const terminalOutput = document.getElementById('terminalOutput');
+
+    const cliCommands = {
+      help: `Available commands:
+  - <span class="text-warning">about</span>: Background and current studies
+  - <span class="text-warning">skills</span>: List technical competencies
+  - <span class="text-warning">projects</span>: Display practical engineering projects
+  - <span class="text-warning">education</span>: Academic degrees & milestones
+  - <span class="text-warning">contact</span>: Direct email, phone, location
+  - <span class="text-warning">resume</span>: Open formal two-column resume
+  - <span class="text-warning">clear</span>: Clear terminal window`,
+      about: `Maharudrasinh Karansinh Jetavat
+B.Tech CSE Student (3rd Year, 5th Sem) at IITE.
+Diploma in Information Technology graduate.
+Focus areas: Frontend Architecture, Data Structures, and Interactive Web.`,
+      skills: `Programming: Python, C, C++
+Web Tech: HTML5, CSS3, JavaScript, Bootstrap 5, Responsive Design
+Core CS: Data Structures, OOP, SQL
+Tools: Git, GitHub, VS Code, Canva
+Additional Exposure: React, Node.js, Express.js, UI/UX`,
+      projects: `1. Healthcare Consultation & Health Management Web App (Team Project | 8 Members, NFC card concept)
+2. Sports Tournament Discovery Platform (Innovation Village Project)`,
+      education: `B.Tech (CSE) @ IITE (2022 - Present) | 4th Sem SGPA: 7.56
+Diploma in IT (2019 - 2022) | CGPA: 6.52
+Secondary 10th (2019) | 65%`,
+      contact: `Email: maharudrasinhrathore@gmail.com
+Phone: +91 82000 82364
+GitHub: github.com/MaharudrasinhRathore
+Location: Ahmedabad, Gujarat, India`
+    };
+
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = terminalInput.value.trim().toLowerCase();
+        terminalInput.value = '';
+
+        const line = document.createElement('div');
+        line.innerHTML = `<span class="text-success">➜</span> <span class="text-info">~</span> <span class="text-light">${cmd}</span>`;
+        terminalOutput.appendChild(line);
+
+        if (cmd === 'clear') {
+          terminalOutput.innerHTML = '';
+        } else if (cmd === 'resume') {
+          const resModal = new bootstrap.Modal(document.getElementById('resumeModal'));
+          resModal.show();
+          const resp = document.createElement('div');
+          resp.className = 'text-success mb-2';
+          resp.textContent = 'Launching official resume view...';
+          terminalOutput.appendChild(resp);
+        } else if (cliCommands[cmd]) {
+          const resp = document.createElement('div');
+          resp.className = 'text-body-secondary mb-2';
+          resp.innerHTML = cliCommands[cmd].replace(/\n/g, '<br>');
+          terminalOutput.appendChild(resp);
+        } else if (cmd !== '') {
+          const resp = document.createElement('div');
+          resp.className = 'text-danger mb-2';
+          resp.innerHTML = `Command not recognized: '${cmd}'. Type <span class="text-warning">help</span> for commands.`;
+          terminalOutput.appendChild(resp);
+        }
+
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
     });
 
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
+    /* -------------------------------------------------------------
+       8. Toast & Clipboard Helper Functions
+       ------------------------------------------------------------- */
+    const toastEl = document.getElementById('actionToast');
+    const toastMsg = document.getElementById('toastMessage');
+    const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 });
+
+    function showToast(message) {
+      toastMsg.textContent = message;
+      bsToast.show();
+    }
+
+    function copyToClipboard(text, message) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => fallbackCopy(text, message));
+      } else {
+        fallbackCopy(text, message);
+      }
+    }
+
+    function fallbackCopy(text, message) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(message);
+    }
+
+    /* -------------------------------------------------------------
+       9. Form Validation & Character Counter
+       ------------------------------------------------------------- */
+    const messageContent = document.getElementById('messageContent');
+    const charCount = document.getElementById('charCount');
+
+    messageContent.addEventListener('input', () => {
+      charCount.textContent = `${messageContent.value.length} / 500`;
+    });
+
+    const contactForm = document.getElementById('portfolioContactForm');
+    contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const form = e.target;
-      if (!form.checkValidity()) {
+      if (!contactForm.checkValidity()) {
         e.stopPropagation();
-        form.classList.add('was-validated');
+        contactForm.classList.add('was-validated');
         return;
       }
-      showToast('Thank you! Message received, Maharudrasinh will respond soon.');
-      form.reset();
-      form.classList.remove('was-validated');
-      charCounter.textContent = '0 / 500';
+
+      const submitBtn = document.getElementById('submitFormBtn');
+      const btnText = document.getElementById('btnText');
+      submitBtn.disabled = true;
+      btnText.textContent = 'Transmitting...';
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Send Message';
+        contactForm.reset();
+        contactForm.classList.remove('was-validated');
+        charCount.textContent = '0 / 500';
+        showToast('Thank you! Your message has been sent to Maharudrasinh.');
+      }, 700);
     });
 
-    // 9. Interactive CLI Terminal
-    const cliWindow = document.getElementById('cliWindow');
-    const cliToggle = document.getElementById('cliToggleBtn');
-    const cliClose = document.getElementById('cliCloseBtn');
-    const cliInput = document.getElementById('cliInput');
-    const cliOutput = document.getElementById('cliOutput');
-
-    cliToggle.addEventListener('click', () => {
-      cliWindow.style.display = cliWindow.style.display === 'flex' ? 'none' : 'flex';
-      if (cliWindow.style.display === 'flex') cliInput.focus();
-    });
-
-    cliClose.addEventListener('click', () => {
-      cliWindow.style.display = 'none';
-    });
-
-    cliInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const cmd = cliInput.value.trim().toLowerCase();
-        cliInput.value = '';
-        renderCliCommand(cmd);
+    /* -------------------------------------------------------------
+       10. Scroll-to-Top Button & Auto Navbar Collapse on Mobile
+       ------------------------------------------------------------- */
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
       }
     });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-    function renderCliCommand(cmd) {
-      const line = document.createElement('div');
-      line.innerHTML = `<span class="text-success">$</span> <span class="text-light">${cmd}</span>`;
-      cliOutput.appendChild(line);
-
-      const resp = document.createElement('div');
-      resp.className = 'mb-2';
-
-      switch (cmd) {
-        case 'help':
-          resp.innerHTML = `Available commands: <br>
-          - <span class="text-warning">about</span>: Background and degree<br>
-          - <span class="text-warning">skills</span>: Technical abilities<br>
-          - <span class="text-warning">projects</span>: View key project titles<br>
-          - <span class="text-warning">contact</span>: Contact information<br>
-          - <span class="text-warning">resume</span>: Launch resume preview<br>
-          - <span class="text-warning">clear</span>: Clear terminal window`;
-          break;
-        case 'about':
-          resp.textContent = 'Maharudrasinh Karansinh Jetavat: 3rd Year B.Tech CSE Student at IITE.';
-          break;
-        case 'skills':
-          resp.textContent = 'Python, C/C++, HTML5, CSS3, JavaScript, Bootstrap 5, SQL, React, Git.';
-          break;
-        case 'projects':
-          resp.textContent = '1. Healthcare Consultation & Health App | 2. Sports Tournament Discovery Platform';
-          break;
-        case 'contact':
-          resp.textContent = 'Email: maharudrasinhrathore@gmail.com | Phone: +91 82000 82364 | Location: Ahmedabad';
-          break;
-        case 'resume':
-          resp.textContent = 'Opening resume modal...';
-          new bootstrap.Modal(document.getElementById('resumeModal')).show();
-          break;
-        case 'clear':
-          cliOutput.innerHTML = '';
-          return;
-        default:
-          resp.innerHTML = `<span class="text-danger">Command not recognized: '${cmd}'. Type 'help'.</span>`;
-      }
-
-      cliOutput.appendChild(resp);
-      cliOutput.scrollTop = cliOutput.scrollHeight;
-    }
+    // Auto-collapse mobile navbar after tapping a link
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const navCollapse = document.getElementById('navbarContent');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 992 && navCollapse.classList.contains('show')) {
+          new bootstrap.Collapse(navCollapse).hide();
+        }
+      });
+    });
   </script>
 </body>
 </html>
